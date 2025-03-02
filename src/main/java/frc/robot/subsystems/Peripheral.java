@@ -11,6 +11,7 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.MAXMotionConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import frc.robot.Constants;
@@ -48,6 +49,7 @@ public class Peripheral extends SubsystemBase {
         SparkMaxConfig f_Config = config;
         elevatorsolm.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
         elevatatorsagm.configure(f_Config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);*/
+        shooterencoder.setPosition(0);
         enccodersol.setPosition(0);
         enccodersag.setPosition(0);
         elevatorController.setGoal(0);
@@ -74,11 +76,19 @@ public class Peripheral extends SubsystemBase {
     public void elevatorKapat(){
         elevatorsolm.set(0.1);
         elevatatorsagm.set(0.1);
+        
     }
     public void elevatorDurdur(){
         elevatorsolm.set(-0.04);
         elevatatorsagm.set(-0.04);
     }
+    
+    public void setShooterAngle(double targetAngle) {
+        // shooteraci'nin kapalı döngü kontrolü modunda olduğunu ve konum kontrolü yapılandırıldığını varsayıyoruz.
+        shooteraci.getClosedLoopController().setReference(targetAngle, ControlType.kPosition);
+    }
+
+
     public void climbBas(){
         climbmotor.set(0.9);
     }
@@ -111,6 +121,9 @@ public class Peripheral extends SubsystemBase {
     }
     public double getEncoderVelocity() {
         return enccodersol.getVelocity();
+    }
+    public double getEncoderAciPosition(){
+        return shooterencoder.getPosition();
     }
     public void setElevatorOutput(double output) {
         System.out.println(output);

@@ -18,6 +18,8 @@ public class elevator_to_autonom_kapat extends Command {
     @Override
     public void initialize() {
         // İsteğe bağlı: encoder sıfırlaması yapılabilir
+        elevator.elevatorDurdur();
+
     }
 
     @Override

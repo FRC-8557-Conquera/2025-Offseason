@@ -17,6 +17,7 @@ public class elevator_to_autonom extends Command {
 
     @Override
     public void initialize() {
+        elevator.elevatorDurdur();
         // İsteğe bağlı: Encoder sıfırlama veya hedef ayarlaması yapılabilir.
     }
 

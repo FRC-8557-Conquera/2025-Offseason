@@ -66,7 +66,7 @@ public class Swerve extends SubsystemBase {
       boolean enableFeedforward = true;
       swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(Constants.Swerve.maxSpeed);
       config = RobotConfig.fromGUISettings();
-      RobotModeTriggers.autonomous().onTrue(Commands.runOnce(this::zeroGyroWithAlliance));
+      //RobotModeTriggers.autonomous().onTrue(Commands.runOnce(this::zeroGyroWithAlliance));
       AutoBuilder.configure(
         this::getPose,
         this::resetOdometry,

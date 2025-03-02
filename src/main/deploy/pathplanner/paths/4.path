@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.28,
-        "y": 0.79
+        "x": 3.949,
+        "y": 5.306
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.701770862616458,
-        "y": 0.7802618073326308
+        "x": 3.460142045454545,
+        "y": 5.755071022727273
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.28,
-        "y": 7.439979197870614
+        "x": 1.645,
+        "y": 7.311
       },
       "prevControl": {
-        "x": 6.877694989079185,
-        "y": 7.449717390537984
+        "x": 2.4113108807678296,
+        "y": 6.798309416883016
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 4.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -59.03669917510328
+    "velocity": 0.0,
+    "rotation": 127.65900000000002
   },
   "reversed": false,
-  "folder": null,
+  "folder": "otonom en sol",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -59.66149987569968
   },
   "useDefaultConstraints": true
 }

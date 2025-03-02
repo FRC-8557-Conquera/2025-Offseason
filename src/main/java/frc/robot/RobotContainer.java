@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+//import static edu.wpi.first.units.Units.Newton;
+
 import java.io.File;
 import java.util.function.BooleanSupplier;
 
@@ -88,16 +90,25 @@ public class RobotContainer {
   private final JoystickButton shooter_Aci_Asagi = 
   new JoystickButton(driver2, 3);
 
-  private final JoystickButton elevator_otonom_l =
-  new JoystickButton(driver2, 5);
+  private final JoystickButton elevator_l4Button = 
+  new JoystickButton(driver2, 7);
+
+  private final JoystickButton elevator_l3Button = 
+  new JoystickButton(driver2, 9);
+
+  private final JoystickButton elevator_l2Button =
+  new JoystickButton(driver2, 11);
 
   private final JoystickButton elevator_kapat = 
-  new JoystickButton(driver2, 7);
+  new JoystickButton(driver2, 8);
+
+  private final JoystickButton shooter_duzelt = 
+  new JoystickButton(driver2 , 10);
+
+
 
   public final Swerve s_Swerve = new Swerve();
   public final Peripheral s_yukari = new Peripheral();
-
-  public final elevator_ac elevator_ac = new elevator_ac(s_yukari);
 
   public final climb_in climb_in = new climb_in(s_yukari);
   public final climb_bas climb_bas = new climb_bas(s_yukari); 
@@ -108,23 +119,28 @@ public class RobotContainer {
   public final shooter_yukari shooter_aci_yukari = new shooter_yukari(s_yukari);
   public final shooter_asagi shooter_aci_asagi = new shooter_asagi(s_yukari);
 
-  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(s_Swerve.getSwerveDrive(), driver::getY, driver::getX)
-  .withControllerRotationAxis(driver::getZ)
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(s_Swerve.getSwerveDrive(), () -> -driver.getY(), () -> -driver.getX())
+  .withControllerRotationAxis(() -> -driver.getZ())
   .deadband(Constants.Swerve.stickDeadband)
   .scaleTranslation(0.8) // YAVAŞLATMA!!!!
   .allianceRelativeControl(true);
+  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(() -> driver.getRawAxis(2), () -> driver.getRawAxis(3)).headingWhile(true);
 
   Command FOdriveAngularVelocity = s_Swerve.driveFieldOriented(driveAngularVelocity);
+  Command FOdriveDirectAngle = s_Swerve.driveFieldOriented(driveDirectAngle);
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    NamedCommands.registerCommand("elevator_l4", elevator_otonom_l(s_yukari, -32.0, -0.6)); 
-    NamedCommands.registerCommand("elevator_l3", elevator_otonom_l(s_yukari, -17, -0.6));
-    NamedCommands.registerCommand("elevator_l2", elevator_otonom_l(s_yukari, -10, -0.6));
-    NamedCommands.registerCommand("elevator_l1", elevator_otonom_l(s_yukari, -5, -0.6));
-    NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -3, 0.3));
+    NamedCommands.registerCommand("Shooter_al", shooter_al(s_yukari));
+    NamedCommands.registerCommand("shooter_tukur", shooter_tukur(s_yukari));
+    NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -32.0, -31, -0.6)); 
+    NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -16.5, -31, -0.6));
+    NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -8, -28,-0.6));
+    NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.23, 0.3));
+    NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -1, 0.3));
+    NamedCommands.registerCommand("Shooter_duzelt", shooter_duzelt(s_yukari));
 
 
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -136,19 +152,42 @@ public class RobotContainer {
   
   
   }
-
-  private Command elevator_otonom_l(Peripheral s_yukari, double position, double speed) {
-    return new elevator_to_autonom(s_yukari, position, speed);
+  private Command shooter_tukur(Peripheral s_yukari){
+    return new shooter_vur(s_yukari);
+    }
+  
+  private Command shooter_al(Peripheral s_yukari) {
+    return new shooter_al(s_yukari);
   }
+
+  private Command elevator_otonom(Peripheral s_yukari,double position, double shooterTarget, double speed){
+    return new elevator_otonom(s_yukari,position,shooterTarget,speed);
+  }
+
   private Command elevator_kapat(Peripheral s_yukari, double position, double speed) {
     return new elevator_to_autonom_kapat(s_yukari, position, speed);
   }
+  
+  private Command shooter_duzelt(Peripheral s_yukari){
+    return new shooter_duzelt(s_yukari);
+
+  }
 
   private void configureButtonBindings() {
-    /* Driver Buttons*/
+
     try {
-    elevator_otonom_l.whileTrue(new elevator_to_autonom(s_yukari, -32.0, -0.6));
-    elevator_otonom_l.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+    shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -1, -12.23, 0.3));
+    shooter_duzelt.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+
+
+    elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -32.0, -31,  -0.6));
+    elevator_l4Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+
+    elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -16.5, -31,-0.6));
+    elevator_l3Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+
+    elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -8, -28.5,-0.6));
+    elevator_l2Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
     shooter_Aci_Asagi.whileTrue(new RunCommand(() -> s_yukari.ShooteraciAsagi(), s_yukari));
     shooter_Aci_Asagi.whileFalse(new RunCommand(() -> s_yukari.ShooteraciDurdur(), s_yukari));
@@ -156,7 +195,7 @@ public class RobotContainer {
     shooter_Aci_Yukari.whileTrue(new RunCommand(()-> s_yukari.ShooteraciYukari(), s_yukari));
     shooter_Aci_Yukari.whileFalse(new RunCommand(()-> s_yukari.ShooteraciDurdur(), s_yukari));
 
-    elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -3.0, 0.3));
+    elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -1.0, 0.3));
     elevator_kapat.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
 
@@ -188,17 +227,19 @@ public class RobotContainer {
     
   }
   
-  
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
   }
+
   public void setMotorBrake(boolean brake)
   {
     s_Swerve.setMotorBrake(brake);
   }
+
   public void resetOdometry(Pose2d pose) {
     s_Swerve.resetOdometry(pose);
   }
+  
   public void zeroGyro() {
     s_Swerve.zeroGyro();
   }
