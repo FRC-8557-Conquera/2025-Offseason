@@ -113,8 +113,8 @@ public class RobotContainer {
   public final climb_in climb_in = new climb_in(s_yukari);
   public final climb_bas climb_bas = new climb_bas(s_yukari); 
 
-  public final shooter_vur shooter_tukur = new shooter_vur(s_yukari);
-  public final shooter_al shooter_icineal = new shooter_al(s_yukari);
+  //public final shooter_vur shooter_tukur = new shooter_vur(s_yukari);
+  //public final shooter_al shooter_icineal = new shooter_al(s_yukari);
 
   public final shooter_yukari shooter_aci_yukari = new shooter_yukari(s_yukari);
   public final shooter_asagi shooter_aci_asagi = new shooter_asagi(s_yukari);
@@ -133,14 +133,14 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    NamedCommands.registerCommand("Shooter_al", shooter_al(s_yukari));
-    NamedCommands.registerCommand("shooter_tukur", shooter_tukur(s_yukari));
+    NamedCommands.registerCommand("Shooter_al", shooter_saniye_al(s_yukari));
+    NamedCommands.registerCommand("shooter_tukur", shooter_saniye_tukur(s_yukari));
     NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -32.0, -31, -0.6)); 
     NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -16.5, -31, -0.6));
     NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -8, -28,-0.6));
     NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.23, 0.3));
     NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -1, 0.3));
-    NamedCommands.registerCommand("Shooter_duzelt", shooter_duzelt(s_yukari));
+    NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -1, -12.23,-0.3));
 
 
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -152,13 +152,13 @@ public class RobotContainer {
   
   
   }
-  private Command shooter_tukur(Peripheral s_yukari){
-    return new shooter_vur(s_yukari);
+  private Command shooter_saniye_tukur(Peripheral s_yukari){
+    return new shooter_saniye_tukur(s_yukari, 3);
+  }
+  private Command shooter_saniye_al(Peripheral s_yukari){
+    return new frc.robot.commands.shooter_saniye_al(s_yukari,3);
     }
   
-  private Command shooter_al(Peripheral s_yukari) {
-    return new shooter_al(s_yukari);
-  }
 
   private Command elevator_otonom(Peripheral s_yukari,double position, double shooterTarget, double speed){
     return new elevator_otonom(s_yukari,position,shooterTarget,speed);

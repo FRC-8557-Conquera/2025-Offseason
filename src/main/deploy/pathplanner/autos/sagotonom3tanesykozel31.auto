@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New Path1"
+            "pathName": "syko1"
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "new2"
+            "pathName": "syko2"
           }
         },
         {
@@ -75,7 +75,69 @@
         {
           "type": "path",
           "data": {
-            "pathName": "new3"
+            "pathName": "syko3"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_l4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter_tukur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_kapa"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "syko4"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "erene_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter_al"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "syko5"
           }
         },
         {

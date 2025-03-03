@@ -3,8 +3,9 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "otonom orta",
-    "otonom en sol"
+    "otonom en sağ",
+    "otonom en sol",
+    "otonom orta"
   ],
   "autoFolders": [],
   "defaultMaxVel": 4.5,

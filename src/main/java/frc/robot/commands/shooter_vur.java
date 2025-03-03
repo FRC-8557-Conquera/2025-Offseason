@@ -9,6 +9,7 @@ public class shooter_vur extends Command{
         this.shooter = shooter;
         addRequirements(shooter);
     }
+    
     @Override
     public void initialize(){
 

@@ -147,7 +147,6 @@ public class Swerve extends SubsystemBase {
  
   public void resetOdometry(Pose2d pose) {
     swerveDrive.resetOdometry(pose);
-    
   }
   private boolean isRedAlliance()
   {
