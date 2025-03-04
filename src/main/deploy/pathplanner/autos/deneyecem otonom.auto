@@ -35,7 +35,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shooter_duzelt"
+                  "name": "erene_duzelt"
                 }
               },
               {
@@ -54,22 +54,9 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "erene_duzelt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shooter_al"
-                }
-              }
-            ]
+            "name": "shooter_al"
           }
         },
         {
@@ -97,7 +84,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shooter_duzelt"
+                  "name": "erene_duzelt"
                 }
               },
               {

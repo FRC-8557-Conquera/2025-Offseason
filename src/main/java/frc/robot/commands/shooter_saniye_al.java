@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.Timer;
 public class shooter_saniye_al extends Command {
     private final Peripheral shooter;
     private final Timer timer = new Timer();
-    private final double duration; // Komutun çalışması istenen süre (saniye cinsinden)
-
+    private final double duration;
+    
     public shooter_saniye_al(Peripheral shooter, double duration) {
         this.shooter = shooter;
         this.duration = duration;
@@ -28,7 +28,6 @@ public class shooter_saniye_al extends Command {
 
     @Override
     public boolean isFinished() {
-        // Belirtilen süre dolduysa komut sona ersin.
         return timer.hasElapsed(duration);
     }
 

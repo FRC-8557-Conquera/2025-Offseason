@@ -11,9 +11,53 @@
           }
         },
         {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_l4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter_tukur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_kapa"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "o2"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter_al"
+                }
+              }
+            ]
           }
         },
         {
@@ -23,15 +67,90 @@
           }
         },
         {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_l4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter_tukur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "erene_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_kapa"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "o4"
           }
         },
         {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter_al"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "o5"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_l4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter_tukur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "erene_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_kapa"
+                }
+              }
+            ]
           }
         }
       ]

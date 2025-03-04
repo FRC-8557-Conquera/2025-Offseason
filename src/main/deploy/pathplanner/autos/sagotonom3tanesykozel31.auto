@@ -35,7 +35,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shooter_duzelt"
+                  "name": "erene_duzelt"
                 }
               },
               {
@@ -57,12 +57,6 @@
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "erene_duzelt"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -97,7 +91,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shooter_duzelt"
+                  "name": "erene_duzelt"
                 }
               },
               {
@@ -119,12 +113,6 @@
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "erene_duzelt"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -159,7 +147,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shooter_duzelt"
+                  "name": "erene_duzelt"
                 }
               },
               {

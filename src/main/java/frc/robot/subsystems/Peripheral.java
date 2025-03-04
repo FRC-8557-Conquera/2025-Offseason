@@ -111,10 +111,10 @@ public class Peripheral extends SubsystemBase {
         shooteraci.set(0);
     }
     public void ShooteraciYukari(){
-        shooteraci.set(0.3);
+        shooteraci.set(0.5);
     }
     public void ShooteraciAsagi(){
-        shooteraci.set(-0.15);
+        shooteraci.set(-0.3);
     }
     public double getEncoderPosition() {
         return enccodersol.getPosition(); 
@@ -126,7 +126,6 @@ public class Peripheral extends SubsystemBase {
         return shooterencoder.getPosition();
     }
     public void setElevatorOutput(double output) {
-        System.out.println(output);
         elevatorsolm.set(-output);
         elevatatorsagm.set(-output);
     }

@@ -171,6 +171,9 @@ public class Swerve extends SubsystemBase {
   public SwerveDrive getSwerveDrive() {
     return swerveDrive;
   }
+  public void setMaximumSpeed(double speed) {
+    swerveDrive.setMaximumAllowableSpeeds(speed, 9.424);
+  }
 
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];

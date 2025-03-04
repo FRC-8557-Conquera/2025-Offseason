@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.Second;
+
 //import static edu.wpi.first.units.Units.Newton;
 
 import java.io.File;
@@ -21,6 +24,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -153,10 +157,10 @@ public class RobotContainer {
   
   }
   private Command shooter_saniye_tukur(Peripheral s_yukari){
-    return new shooter_saniye_tukur(s_yukari, 3);
+    return new shooter_saniye_tukur(s_yukari, 0.5);
   }
   private Command shooter_saniye_al(Peripheral s_yukari){
-    return new frc.robot.commands.shooter_saniye_al(s_yukari,3);
+    return new shooter_saniye_al(s_yukari,1);
     }
   
 
@@ -167,11 +171,6 @@ public class RobotContainer {
   private Command elevator_kapat(Peripheral s_yukari, double position, double speed) {
     return new elevator_to_autonom_kapat(s_yukari, position, speed);
   }
-  
-  private Command shooter_duzelt(Peripheral s_yukari){
-    return new shooter_duzelt(s_yukari);
-
-  }
 
   private void configureButtonBindings() {
 
@@ -179,6 +178,8 @@ public class RobotContainer {
     shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -1, -12.23, 0.3));
     shooter_duzelt.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
+    incSpeed.onTrue(new RunCommand(() -> s_Swerve.setMaximumSpeed(s_Swerve.getSwerveDrive().getMaximumChassisVelocity() + 0.1)));
+    decSpeed.onTrue(new RunCommand(() -> s_Swerve.setMaximumSpeed(s_Swerve.getSwerveDrive().getMaximumChassisVelocity() - 0.1)));
 
     elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -32.0, -31,  -0.6));
     elevator_l4Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));

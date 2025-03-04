@@ -6,26 +6,34 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.config.CTREConfigs;
 import frc.robot.subsystems.Peripheral;
 import swervelib.SwerveDrive;
 
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import edu.wpi.first.wpilibj.GenericHID;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -37,47 +45,43 @@ public class Robot extends TimedRobot {
   public static CTREConfigs ctreConfigs;
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-
-
-
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
+ /* private AddressableLED led1;
+  private AddressableLEDBuffer ledBuffer1;
+  private AddressableLED led2;
+  private AddressableLEDBuffer ledBuffer2;*/
+  
   @Override
   public void robotInit() {
-
-    /*ledBuffer = new AddressableLEDBuffer(113);
-    led.setLength(ledBuffer.getLength());
-    for (var i = 0; i < ledBuffer.getLength(); i++) {
-      //ledBuffer.setRGB(i, 0, 255, 128);
-      ledBuffer.setRGB(i,255,0, 121);
-      //ledBuffer.setRGB(i,160, 32, 240);
-
+    // PWM Port 1'deki LED şeridi başlat (82 LED)
+   /* led1 = new AddressableLED(0);
+    ledBuffer1 = new AddressableLEDBuffer(83);
+    led1.setLength(ledBuffer1.getLength());
+    
+    // Tüm LED'leri mavi renge ayarla (RGB: 0, 0, 255)
+    for (int i = 0; i < ledBuffer1.getLength(); i++) {
+        ledBuffer1.setRGB(i, 0, 0, 0);
     }
-    led.setData(ledBuffer);
-    /*for (int i = 0; i<117; i++){
-      ledBuffer.setRGB(i, 0, 0, 255);
+    
+    // Buffer'ı LED şeridine gönder ve şeridi başlat
+    led1.setData(ledBuffer1);
+    led1.start();
+
+    // PWM Port 2'deki LED şeridi başlat (83 LED)
+    led2 = new AddressableLED(1);
+    ledBuffer2 = new AddressableLEDBuffer(82);
+    led2.setLength(ledBuffer2.getLength());
+
+    // Tüm LED'leri mavi renge ayarla (aynı renk, RGB: 0, 0, 255)
+    for (int i = 0; i < ledBuffer2.getLength(); i++) {
+        ledBuffer2.setRGB(i, 0, 0, 0);
     }
-    led.setData(ledBuffer);*/
-    // Creates UsbCamera and MjpegServer [1] and connects them
-    ctreConfigs = new CTREConfigs();
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
-   
+    
+    led2.setData(ledBuffer2);
+    led2.start();* */
   }
-
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-   * SmartDashboard integrated updating.
-   */
- 
   @Override
   public void robotPeriodic() {
+    // Update the buffer with the rainbow animation
 
     CommandScheduler.getInstance().run();
 
