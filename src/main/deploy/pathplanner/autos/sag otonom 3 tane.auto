@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Shooter_duzelt"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "syko1"
@@ -17,13 +23,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shooter_duzelt"
+                  "name": "elevator_l2"
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "elevator_l4"
+                  "waitTime": 0.5
                 }
               },
               {
@@ -35,13 +41,19 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "erene_duzelt"
+                  "name": "Shooter_duzelt"
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "elevator_kapa"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "erene_duzelt"
                 }
               }
             ]
@@ -79,7 +91,19 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "Shooter_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "elevator_l4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
                 }
               },
               {
@@ -91,13 +115,19 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "erene_duzelt"
+                  "name": "Shooter_duzelt"
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "elevator_kapa"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "erene_duzelt"
                 }
               }
             ]
@@ -135,7 +165,19 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "Shooter_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "elevator_l4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
                 }
               },
               {
@@ -147,7 +189,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "erene_duzelt"
+                  "name": "Shooter_duzelt"
                 }
               },
               {

@@ -18,7 +18,6 @@ public class elevator_to_autonom extends Command {
     @Override
     public void initialize() {
         elevator.elevatorDurdur();
-        // İsteğe bağlı: Encoder sıfırlama veya hedef ayarlaması yapılabilir.
     }
 
     @Override
@@ -27,6 +26,7 @@ public class elevator_to_autonom extends Command {
         // Eğer elevator henüz hedefe ulaşmamışsa (daha az negatifse), sabit hızda çalıştır.
         if (currentPosition > target) {
             elevator.setElevatorOutput(-motorSpeed);
+
         } else {
             // Hedefe ulaşıldığında motorları durdur.
             elevator.elevatorDurdur();
@@ -42,5 +42,6 @@ public class elevator_to_autonom extends Command {
     @Override
     public void end(boolean interrupted) {
         elevator.elevatorDurdur();
+
     }
 }

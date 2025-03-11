@@ -3,6 +3,8 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
+    "New Folder",
+    "arkadan orta",
     "otonom en sağ",
     "otonom en sol",
     "otonom orta"

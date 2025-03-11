@@ -38,17 +38,6 @@ public class Peripheral extends SubsystemBase {
             Constants.yukari.kP, Constants.yukari.kI, Constants.yukari.kD,
             new Constraints(1.0, 0.5)); // Maks hız ve ivme (örnek değerler)
     public Peripheral(){
-        /*SparkMaxConfig config = new SparkMaxConfig();
-        config.encoder
-            .positionConversionFactor(Constants.yukari.pulleyCircumference)
-            .velocityConversionFactor(Constants.yukari.pulleyCircumference / 60);
-        config.closedLoop
-            .pid(0.1,0,0)
-            .maxMotion
-            .maxVelocity(4);
-        SparkMaxConfig f_Config = config;
-        elevatorsolm.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-        elevatatorsagm.configure(f_Config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);*/
         shooterencoder.setPosition(0);
         enccodersol.setPosition(0);
         enccodersag.setPosition(0);
@@ -56,7 +45,6 @@ public class Peripheral extends SubsystemBase {
         elevatorsolm.setInverted(false); //elevator - yön
         elevatatorsagm.setInverted(true);//elevator + yön
         climbmotor.setInverted(false);
- 
     }
     
     @Override
@@ -101,8 +89,11 @@ public class Peripheral extends SubsystemBase {
     public void shooterTukur(){
         shooter.set(-0.4);
     }
+    public void shooteryavas(){
+        shooter.set(0.1);
+    }
     public void shooterIcineal(){
-        shooter.set(0.4);
+        shooter.set(0.8);
     }
     public void shooterDurdur(){
         shooter.set(0);

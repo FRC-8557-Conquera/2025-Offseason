@@ -23,17 +23,20 @@ public class shooter_duzelt extends Command {
     public void execute() {
         // Shooter açısını kapalı döngü ile hedef açıya getir
         shooterSubsystem.setShooterAngle(targetAngle);
+        shooterSubsystem.shooteryavas();
     }
 
     @Override
     public boolean isFinished() {
         // Mevcut shooter açısı hedefe yakınsa komut biter
         return Math.abs(shooterSubsystem.getEncoderAciPosition() - targetAngle) < tolerance;
+        
     }
 
     @Override
     public void end(boolean interrupted) {
         // Komut biterken shooter motorunu durdur
         shooterSubsystem.ShooteraciDurdur();
+        shooterSubsystem.shooteryavas();
     }
 }

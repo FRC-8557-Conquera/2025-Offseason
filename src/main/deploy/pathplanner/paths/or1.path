@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.929,
-        "y": 2.724
+        "x": 7.120454545454545,
+        "y": 4.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3751805466432137,
-        "y": 2.543089265850791
+        "x": 7.375770509451429,
+        "y": 4.20293980078005
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.117,
-        "y": 1.048
+        "x": 5.025,
+        "y": 5.24
       },
       "prevControl": {
-        "x": 1.987037577668937,
-        "y": 1.489912915830396
+        "x": 6.2659090909090915,
+        "y": 5.0134848484848495
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": "otonom en sağ",
+  "folder": "arkadan orta",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

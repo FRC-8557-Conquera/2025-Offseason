@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New Path1"
+            "pathName": "or1"
           }
         },
         {
@@ -27,6 +27,12 @@
                 }
               },
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              },
+              {
                 "type": "named",
                 "data": {
                   "name": "shooter_tukur"
@@ -35,13 +41,19 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "erene_duzelt"
+                  "name": "Shooter_duzelt"
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "elevator_kapa"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "erene_duzelt"
                 }
               }
             ]
@@ -50,19 +62,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "new2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shooter_al"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "new3"
+            "pathName": "or2"
           }
         },
         {
@@ -72,7 +72,38 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "shooter_al"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "or3"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "elevator_l4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
                 }
               },
               {
@@ -84,7 +115,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "erene_duzelt"
+                  "name": "Shooter_duzelt"
                 }
               },
               {
@@ -94,6 +125,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "or4"
           }
         }
       ]

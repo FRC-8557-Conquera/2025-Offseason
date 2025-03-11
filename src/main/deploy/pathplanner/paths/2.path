@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.335,
-        "y": 5.107
+        "x": 5.315,
+        "y": 5.067
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.846193181818182,
-        "y": 5.83484375
+        "x": 3.7177487715055086,
+        "y": 6.916280942881505
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.6453125,
-        "y": 7.310639204545454
+        "x": 1.057,
+        "y": 6.91
       },
       "prevControl": {
-        "x": 2.4116810951967733,
-        "y": 6.797918675992111
+        "x": 1.3960227272794636,
+        "y": 7.24083806818863
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "otonom en sol",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -122.12500000000001
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": true
 }

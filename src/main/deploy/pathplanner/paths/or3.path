@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.823,
-        "y": 4.08
+        "x": 1.11,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.5318412162162165,
-        "y": 6.782010135135135
+        "x": 3.712878787878788,
+        "y": 6.74810606060606
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.416,
-        "y": 7.15109375
+        "x": 4.0,
+        "y": 5.25
       },
       "prevControl": {
-        "x": 2.6709831081081092,
-        "y": 6.232090371621622
+        "x": 2.9462121212121213,
+        "y": 6.638636363636364
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": null,
+  "folder": "arkadan orta",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 125.00000000000001
   },
   "useDefaultConstraints": true
 }

@@ -14,6 +14,7 @@ import java.util.function.BooleanSupplier;
 
 import javax.swing.colorchooser.DefaultColorSelectionModel;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.deser.impl.NullsAsEmptyProvider;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator.NameMatcher;
 import com.fasterxml.jackson.databind.util.Named;
@@ -109,6 +110,7 @@ public class RobotContainer {
   private final JoystickButton shooter_duzelt = 
   new JoystickButton(driver2 , 10);
 
+  //private final JoystickButton addFakeVision = new JoystickButton(driver, 10);
 
 
   public final Swerve s_Swerve = new Swerve();
@@ -126,25 +128,26 @@ public class RobotContainer {
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(s_Swerve.getSwerveDrive(), () -> -driver.getY(), () -> -driver.getX())
   .withControllerRotationAxis(() -> -driver.getZ())
   .deadband(Constants.Swerve.stickDeadband)
-  .scaleTranslation(0.8) // YAVAŞLATMA!!!!
+  .scaleTranslation(0.8) // YAVASLATMA!!!!
   .allianceRelativeControl(true);
   SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(() -> driver.getRawAxis(2), () -> driver.getRawAxis(3)).headingWhile(true);
 
   Command FOdriveAngularVelocity = s_Swerve.driveFieldOriented(driveAngularVelocity);
   Command FOdriveDirectAngle = s_Swerve.driveFieldOriented(driveDirectAngle);
   // A chooser for autonomous commands
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     NamedCommands.registerCommand("Shooter_al", shooter_saniye_al(s_yukari));
     NamedCommands.registerCommand("shooter_tukur", shooter_saniye_tukur(s_yukari));
-    NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -32.0, -31, -0.6)); 
-    NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -16.5, -31, -0.6));
+    NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -32.5, -30, -0.6)); 
+    NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -16.5, -28, -0.6));
     NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -8, -28,-0.6));
-    NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.23, 0.3));
+    NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.0, 0.3));
     NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -1, 0.3));
-    NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -1, -12.23,-0.3));
+    NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20.23,-0.3));
 
 
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -157,10 +160,10 @@ public class RobotContainer {
   
   }
   private Command shooter_saniye_tukur(Peripheral s_yukari){
-    return new shooter_saniye_tukur(s_yukari, 0.5);
+    return new shooter_saniye_tukur(s_yukari, 1.5);
   }
   private Command shooter_saniye_al(Peripheral s_yukari){
-    return new shooter_saniye_al(s_yukari,1);
+    return new shooter_saniye_al(s_yukari,6);
     }
   
 
@@ -175,19 +178,19 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     try {
-    shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -1, -12.23, 0.3));
+    shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -1, -8, 0.3));
     shooter_duzelt.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
-    incSpeed.onTrue(new RunCommand(() -> s_Swerve.setMaximumSpeed(s_Swerve.getSwerveDrive().getMaximumChassisVelocity() + 0.1)));
-    decSpeed.onTrue(new RunCommand(() -> s_Swerve.setMaximumSpeed(s_Swerve.getSwerveDrive().getMaximumChassisVelocity() - 0.1)));
+    //incSpeed.onTrue(new RunCommand(() -> s_Swerve.setMaximumSpeed(s_Swerve.getSwerveDrive().getMaximumChassisVelocity() + 0.1)));
+    //decSpeed.onTrue(new RunCommand(() -> s_Swerve.setMaximumSpeed(s_Swerve.getSwerveDrive().getMaximumChassisVelocity() - 0.1)));
 
-    elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -32.0, -31,  -0.6));
+    elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -32.0, -30,  -0.4));
     elevator_l4Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
-    elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -16.5, -31,-0.6));
+    elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -16.5, -30,-0.4));
     elevator_l3Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
-    elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -8, -28.5,-0.6));
+    elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -8, -28.5,-0.4));
     elevator_l2Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
     shooter_Aci_Asagi.whileTrue(new RunCommand(() -> s_yukari.ShooteraciAsagi(), s_yukari));
@@ -196,7 +199,7 @@ public class RobotContainer {
     shooter_Aci_Yukari.whileTrue(new RunCommand(()-> s_yukari.ShooteraciYukari(), s_yukari));
     shooter_Aci_Yukari.whileFalse(new RunCommand(()-> s_yukari.ShooteraciDurdur(), s_yukari));
 
-    elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -1.0, 0.3));
+    elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -1.0, 0.2));
     elevator_kapat.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
 
@@ -207,9 +210,6 @@ public class RobotContainer {
     climb_In.whileFalse(new RunCommand(() -> s_yukari.climbDur(), s_yukari));
 
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-
-    incSpeed.whileTrue(new InstantCommand(() -> s_Swerve.incSpeed()));
-    decSpeed.whileTrue(new InstantCommand(() -> s_Swerve.decSpeed()));
 
     xLock.whileTrue(Commands.runOnce((() -> s_Swerve.lock()), s_Swerve).repeatedly());
 
