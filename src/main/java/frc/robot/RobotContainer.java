@@ -155,6 +155,7 @@ public class RobotContainer {
     configureButtonBindings();
     m_chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData(m_chooser);
+    SmartDashboard.putString("pose", s_Swerve.getPose().toString());
     s_Swerve.resetModulesToAbsolute();
   
   
