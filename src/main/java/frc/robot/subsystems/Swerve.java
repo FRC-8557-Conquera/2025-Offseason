@@ -58,7 +58,7 @@ public class Swerve extends SubsystemBase {
   private Field2d field;
   public SwerveDrive swerveDrive;
   private final boolean visionDriveTest = false;
-  private Vision vision;
+  public Vision vision;
   private File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
   public Swerve() {
     RobotConfig config;

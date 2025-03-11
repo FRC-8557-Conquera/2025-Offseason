@@ -46,6 +46,7 @@ import frc.robot.Constants;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Vision.Cameras;
 import pabeles.concurrency.ConcurrencyOps.NewInstance;
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
@@ -110,11 +111,17 @@ public class RobotContainer {
   private final JoystickButton shooter_duzelt = 
   new JoystickButton(driver2 , 10);
 
-  //private final JoystickButton addFakeVision = new JoystickButton(driver, 10);
+  private final JoystickButton aimtarget = 
+  new JoystickButton(driver, 10);
 
+  private final JoystickButton apriltagtakip =
+  new JoystickButton(driver, 11);
 
   public final Swerve s_Swerve = new Swerve();
   public final Peripheral s_yukari = new Peripheral();
+  // 
+  
+  public final Vision s_Vision = s_Swerve.vision;
 
   public final climb_in climb_in = new climb_in(s_yukari);
   public final climb_bas climb_bas = new climb_bas(s_yukari); 
@@ -148,6 +155,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.0, 0.3));
     NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -1, 0.3));
     NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20.23,-0.3));
+    NamedCommands.registerCommand("apriltag_takip", followapriltag(s_Swerve, s_Vision, 7));
 
 
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -171,6 +179,9 @@ public class RobotContainer {
   private Command elevator_otonom(Peripheral s_yukari,double position, double shooterTarget, double speed){
     return new elevator_otonom(s_yukari,position,shooterTarget,speed);
   }
+  private Command followapriltag(Swerve s_Swerve, Vision s_Vision, int targetTagID) {
+    return new followapriltag(s_Swerve, s_Vision, targetTagID);
+  }
 
   private Command elevator_kapat(Peripheral s_yukari, double position, double speed) {
     return new elevator_to_autonom_kapat(s_yukari, position, speed);
@@ -182,8 +193,10 @@ public class RobotContainer {
     shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -1, -8, 0.3));
     shooter_duzelt.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
-    //incSpeed.onTrue(new RunCommand(() -> s_Swerve.setMaximumSpeed(s_Swerve.getSwerveDrive().getMaximumChassisVelocity() + 0.1)));
-    //decSpeed.onTrue(new RunCommand(() -> s_Swerve.setMaximumSpeed(s_Swerve.getSwerveDrive().getMaximumChassisVelocity() - 0.1)));
+    aimtarget.whileTrue(new RunCommand(() -> s_Swerve.aimAtTarget(Cameras.RAZER), s_Swerve));
+
+    apriltagtakip.whileTrue(new followapriltag(s_Swerve, s_Vision, 7)); 
+
 
     elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -32.0, -30,  -0.4));
     elevator_l4Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
