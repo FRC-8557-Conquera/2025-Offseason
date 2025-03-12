@@ -68,13 +68,7 @@ public class RobotContainer {
 
   private final JoystickButton zeroGyro =
   new JoystickButton(driver, 3);
-
-  private final JoystickButton incSpeed =
-  new JoystickButton(driver,  4);
-
-  private final JoystickButton decSpeed =
-  new JoystickButton(driver, 5);
-
+  
   private final JoystickButton xLock = 
   new JoystickButton(driver, 6);
 
@@ -115,7 +109,7 @@ public class RobotContainer {
   new JoystickButton(driver, 10);
 
   private final JoystickButton apriltagtakip =
-  new JoystickButton(driver, 11);
+  new JoystickButton(driver, 9);
 
   public final Swerve s_Swerve = new Swerve();
   public final Peripheral s_yukari = new Peripheral();
@@ -180,7 +174,7 @@ public class RobotContainer {
     return new elevator_otonom(s_yukari,position,shooterTarget,speed);
   }
   private Command followapriltag(Swerve s_Swerve, Vision s_Vision, int targetTagID) {
-    return new followapriltag(s_Swerve, s_Vision, targetTagID);
+    return new followapriltag(s_Swerve, targetTagID);
   }
 
   private Command elevator_kapat(Peripheral s_yukari, double position, double speed) {
@@ -195,7 +189,7 @@ public class RobotContainer {
 
     aimtarget.whileTrue(new RunCommand(() -> s_Swerve.aimAtTarget(Cameras.RAZER), s_Swerve));
 
-    apriltagtakip.whileTrue(new followapriltag(s_Swerve, s_Vision, 7)); 
+    apriltagtakip.whileTrue(new followapriltag(s_Swerve, 7)); 
 
 
     elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -32.0, -30,  -0.4));

@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.AddressableLED;
@@ -24,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.config.CTREConfigs;
 import frc.robot.subsystems.Peripheral;
+import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Vision.Cameras;
 import swervelib.SwerveDrive;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -42,42 +45,14 @@ public class Robot extends TimedRobot {
   public static CTREConfigs ctreConfigs;
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+  private final Joystick driver = new Joystick(0); 
 
- /* private AddressableLED led1;
-  private AddressableLEDBuffer ledBuffer1;
-  private AddressableLED led2;
-  private AddressableLEDBuffer ledBuffer2;*/
-  
+
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
     PortForwarder.add(5800, "photonvision.local", 5800);
-    // PWM Port 1'deki LED şeridi başlat (82 LED)
-   /* led1 = new AddressableLED(0);
-    ledBuffer1 = new AddressableLEDBuffer(83);
-    led1.setLength(ledBuffer1.getLength());
     
-    // Tüm LED'leri mavi renge ayarla (RGB: 0, 0, 255)
-    for (int i = 0; i < ledBuffer1.getLength(); i++) {
-        ledBuffer1.setRGB(i, 0, 0, 0);
-    }
-    
-    // Buffer'ı LED şeridine gönder ve şeridi başlat
-    led1.setData(ledBuffer1);
-    led1.start();
-
-    // PWM Port 2'deki LED şeridi başlat (83 LED)
-    led2 = new AddressableLED(1);
-    ledBuffer2 = new AddressableLEDBuffer(82);
-    led2.setLength(ledBuffer2.getLength());
-
-    // Tüm LED'leri mavi renge ayarla (aynı renk, RGB: 0, 0, 255)
-    for (int i = 0; i < ledBuffer2.getLength(); i++) {
-        ledBuffer2.setRGB(i, 0, 0, 0);
-    }
-    
-    led2.setData(ledBuffer2);
-    led2.start();* */
   }
   @Override
   public void robotPeriodic() {
@@ -124,7 +99,46 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+                // Calculate drivetrain commands from Joystick values
+    double forward = -driver.getAxisType(1) * Constants.MAX_SPEED;
+    double strafe = -driver.getAxisType(0) * Constants.MAX_SPEED;
+    double turn = -driver.getAxisType(2) * Constants.Swerve.maxAngularVelocity;
+
+    // Read in relevant data from the Camera
+    boolean targetVisible = false;
+    double targetYaw = 0.0;
+    var results = Cameras.RAZER.getLatestResult();
+    if (results.isPresent()) {
+        // Camera processed a new frame since last
+        // Get the result from the Optional.
+        var result = results.get();
+        if (result.hasTargets()) {
+            // At least one AprilTag was seen by the camera
+            for (var target : result.getTargets()) {
+                if (target.getFiducialId() == 7) {
+                    // Found Tag 7, record its information
+                    targetYaw = target.getYaw();
+                    targetVisible = true;
+                }
+            }
+        }
+    }
+
+    // Auto-align when requested
+    if (driver.getRawButtonPressed(5) && targetVisible) {
+        // Driver wants auto-alignment to tag 7
+        // And, tag 7 is in sight, so we can turn toward it.
+        // Override the driver's turn command with an automatic one that turns toward the tag.
+        turn = -1.0 * targetYaw * 0.1 * Constants.Swerve.maxAngularVelocity;
+    }
+
+    // Command drivetrain motors based on target speeds
+    m_robotContainer.s_Swerve.driveFieldOriented(new ChassisSpeeds(forward, strafe, turn));
+
+    // Put debug information to the dashboard
+    SmartDashboard.putBoolean("Vision Target Visible", targetVisible);
+  }
 
   @Override
   public void testInit() {

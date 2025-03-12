@@ -18,9 +18,9 @@ public class followapriltag extends Command {
     private final int targetTagID;  // Takip edilecek AprilTag ID
     private final double targetX = 0.0;  // Görüntünün ortasında kalmasını istiyoruz
 
-    public followapriltag(Swerve swerve, Vision vision, int targetTagID) {
+    public followapriltag(Swerve swerve, int targetTagID) {
         this.swerve = swerve;
-        this.vision = vision;
+        this.vision = swerve.vision;
         this.targetTagID = targetTagID;
         this.strafeController = new PIDController(0.1, 0, 0); // PID kontrolü (isteğe bağlı)
 

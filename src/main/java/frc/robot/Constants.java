@@ -20,7 +20,6 @@ import edu.wpi.first.math.geometry.Rotation3d;
 public final class Constants {
 
   public static final double MAX_SPEED = 5.450;
-  
   //swerve modulleri tanımlama matematik:
   public static final class yukari{
     public static final int solelevator = 31;
