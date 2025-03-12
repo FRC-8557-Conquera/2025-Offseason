@@ -146,14 +146,19 @@ public class Swerve extends SubsystemBase {
     swerveDrive.drive(velocity);
   }
 
-  public Command aimAtTarget(Cameras camera) {
+  public Command aimAtTarget() {
     return run(() -> {
-      Optional<PhotonPipelineResult> resultO = camera.getBestResult();
+    System.out.println("Komut geldi");
+      Optional<PhotonPipelineResult> resultO = Cameras.RAZER.getBestResult();
       if (resultO.isPresent())
       {
+        System.out.println("cam");
+        SmartDashboard.putString("vision", "Sonuc var");
         var result = resultO.get();
         if (result.hasTargets())
         {
+        System.out.println("april geldi");
+        SmartDashboard.putString("vision", "Hedef var");
           drive(getTargetSpeeds(0,
                                 0,
                                 Rotation2d.fromDegrees(result.getBestTarget()

@@ -152,7 +152,7 @@ public class Vision extends SubsystemBase {
 
     
     public enum Cameras {
-        RAZER("razer", new Rotation3d(0,0,0.52), new Translation3d(0.335,0.325,0.31), VecBuilder.fill(4,4,8), VecBuilder.fill(0.5,0.5,1));
+        RAZER("photonvision_Port_1182_Output_MJPEG_Server", new Rotation3d(0,0,0.52), new Translation3d(0.335,0.325,0.31), VecBuilder.fill(4,4,8), VecBuilder.fill(0.5,0.5,1));
         public final Alert latencyAlert;
         public final PhotonCamera camera;
         public final PhotonPoseEstimator poseEstimator;

@@ -68,7 +68,7 @@ public class RobotContainer {
 
   private final JoystickButton zeroGyro =
   new JoystickButton(driver, 3);
-  
+
   private final JoystickButton xLock = 
   new JoystickButton(driver, 6);
 
@@ -104,12 +104,13 @@ public class RobotContainer {
 
   private final JoystickButton shooter_duzelt = 
   new JoystickButton(driver2 , 10);
-
+ 
   private final JoystickButton aimtarget = 
-  new JoystickButton(driver, 10);
+  new JoystickButton(driver, 5);
 
-  private final JoystickButton apriltagtakip =
+  private final JoystickButton photon =
   new JoystickButton(driver, 9);
+
 
   public final Swerve s_Swerve = new Swerve();
   public final Peripheral s_yukari = new Peripheral();
@@ -149,7 +150,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.0, 0.3));
     NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -1, 0.3));
     NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20.23,-0.3));
-    NamedCommands.registerCommand("apriltag_takip", followapriltag(s_Swerve, s_Vision, 7));
 
 
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -167,32 +167,31 @@ public class RobotContainer {
   }
   private Command shooter_saniye_al(Peripheral s_yukari){
     return new shooter_saniye_al(s_yukari,6);
-    }
+  }
+ 
   
 
   private Command elevator_otonom(Peripheral s_yukari,double position, double shooterTarget, double speed){
     return new elevator_otonom(s_yukari,position,shooterTarget,speed);
   }
-  private Command followapriltag(Swerve s_Swerve, Vision s_Vision, int targetTagID) {
-    return new followapriltag(s_Swerve, targetTagID);
-  }
-
   private Command elevator_kapat(Peripheral s_yukari, double position, double speed) {
     return new elevator_to_autonom_kapat(s_yukari, position, speed);
   }
+  //  private Command decSpeed (Swerve s_Swerve, double maxSpeed){
+  //    return new RunCommand(() -> s_Swerve, s_Swerve.setMaximumSpeed -= 1);
+  //  }
 
   private void configureButtonBindings() {
 
     try {
+    photon.whileTrue(new photonvision(s_Swerve, 7));
+    
     shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -1, -8, 0.3));
     shooter_duzelt.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
-    aimtarget.whileTrue(new RunCommand(() -> s_Swerve.aimAtTarget(Cameras.RAZER), s_Swerve));
+    aimtarget.whileTrue(s_Swerve.aimAtTarget());
 
-    apriltagtakip.whileTrue(new followapriltag(s_Swerve, 7)); 
-
-
-    elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -32.0, -30,  -0.4));
+    elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -830.0, -30,  -0.4));
     elevator_l4Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
     elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -16.5, -30,-0.4));
@@ -207,7 +206,7 @@ public class RobotContainer {
     shooter_Aci_Yukari.whileTrue(new RunCommand(()-> s_yukari.ShooteraciYukari(), s_yukari));
     shooter_Aci_Yukari.whileFalse(new RunCommand(()-> s_yukari.ShooteraciDurdur(), s_yukari));
 
-    elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -1.0, 0.2));
+    elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -10.0, 0.2));
     elevator_kapat.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
 

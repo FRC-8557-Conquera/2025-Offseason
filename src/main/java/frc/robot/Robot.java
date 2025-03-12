@@ -99,46 +99,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-                // Calculate drivetrain commands from Joystick values
-    double forward = -driver.getAxisType(1) * Constants.MAX_SPEED;
-    double strafe = -driver.getAxisType(0) * Constants.MAX_SPEED;
-    double turn = -driver.getAxisType(2) * Constants.Swerve.maxAngularVelocity;
-
-    // Read in relevant data from the Camera
-    boolean targetVisible = false;
-    double targetYaw = 0.0;
-    var results = Cameras.RAZER.getLatestResult();
-    if (results.isPresent()) {
-        // Camera processed a new frame since last
-        // Get the result from the Optional.
-        var result = results.get();
-        if (result.hasTargets()) {
-            // At least one AprilTag was seen by the camera
-            for (var target : result.getTargets()) {
-                if (target.getFiducialId() == 7) {
-                    // Found Tag 7, record its information
-                    targetYaw = target.getYaw();
-                    targetVisible = true;
-                }
-            }
-        }
-    }
-
-    // Auto-align when requested
-    if (driver.getRawButtonPressed(5) && targetVisible) {
-        // Driver wants auto-alignment to tag 7
-        // And, tag 7 is in sight, so we can turn toward it.
-        // Override the driver's turn command with an automatic one that turns toward the tag.
-        turn = -1.0 * targetYaw * 0.1 * Constants.Swerve.maxAngularVelocity;
-    }
-
-    // Command drivetrain motors based on target speeds
-    m_robotContainer.s_Swerve.driveFieldOriented(new ChassisSpeeds(forward, strafe, turn));
-
-    // Put debug information to the dashboard
-    SmartDashboard.putBoolean("Vision Target Visible", targetVisible);
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
