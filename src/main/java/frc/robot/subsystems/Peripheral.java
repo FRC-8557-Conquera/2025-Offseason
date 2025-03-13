@@ -102,10 +102,10 @@ public class Peripheral extends SubsystemBase {
         shooteraci.set(0);
     }
     public void ShooteraciYukari(){
-        shooteraci.set(0.5);
+        shooteraci.set(0.6);
     }
     public void ShooteraciAsagi(){
-        shooteraci.set(-0.3);
+        shooteraci.set(-0.4);
     }
     public double getEncoderPosition() {
         return enccodersol.getPosition(); 

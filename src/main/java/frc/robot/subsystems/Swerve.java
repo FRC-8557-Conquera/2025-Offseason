@@ -249,8 +249,6 @@ public class Swerve extends SubsystemBase {
   
   }
 
-
-
   public double getTilt(){
     double pitch = swerveDrive.getPitch().getDegrees();
     double roll = swerveDrive.getRoll().getDegrees();
@@ -263,24 +261,6 @@ public class Swerve extends SubsystemBase {
 
 }
 
-/*public static double speedRateSwerve = 1.0; 
-
-
-  public void incSpeed() {
-
-    if(speedRateSwerve < 1.15 ) { 
-      speedRateSwerve = speedRateSwerve + 0.1;
-  } 
-
-  }
-
-  public void decSpeed() {
-    
-    if(speedRateSwerve > 0.15 ){
-      speedRateSwerve = speedRateSwerve - 0.1;
-    }
-
-  }*/
   public double getPitch() {
     return swerveDrive.getPitch().getDegrees();
   }

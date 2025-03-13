@@ -11,52 +11,9 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shooter_duzelt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "elevator_l4"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shooter_tukur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shooter_duzelt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "elevator_kapa"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "erene_duzelt"
-                }
-              }
-            ]
+            "waitTime": 5.0
           }
         },
         {
@@ -66,16 +23,9 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "shooter_al"
-                }
-              }
-            ]
+            "waitTime": 5.0
           }
         },
         {
@@ -85,46 +35,9 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shooter_duzelt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "elevator_l4"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shooter_tukur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shooter_duzelt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "elevator_kapa"
-                }
-              }
-            ]
+            "waitTime": 5.0
           }
         },
         {
