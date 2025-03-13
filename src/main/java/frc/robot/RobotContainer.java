@@ -11,8 +11,11 @@ import static edu.wpi.first.units.Units.Second;
 
 import java.io.File;
 import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 import javax.swing.colorchooser.DefaultColorSelectionModel;
+
+import org.photonvision.PhotonCamera;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.deser.impl.NullsAsEmptyProvider;
@@ -23,8 +26,12 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -105,17 +112,21 @@ public class RobotContainer {
   private final JoystickButton shooter_duzelt = 
   new JoystickButton(driver2 , 10);
  
-  private final JoystickButton aimtarget = 
-  new JoystickButton(driver, 5);
+  // private final JoystickButton aimattarget = 
+  // new JoystickButton(driver, 5);
 
-  private final JoystickButton photon =
-  new JoystickButton(driver, 9);
+  // private final JoystickButton photon =
+  //new JoystickButton(driver, 9);
+
+  //private final JoystickButton driveToPos =
+  // new JoystickButton(driver, 10);
 
 
   public final Swerve s_Swerve = new Swerve();
   public final Peripheral s_yukari = new Peripheral();
   // 
-  
+  //public final Vision vision = new Vision(s_Swerve::getPose, new edu.wpi.first.wpilibj.smartdashboard.Field2d());
+
   public final Vision s_Vision = s_Swerve.vision;
 
   public final climb_in climb_in = new climb_in(s_yukari);
@@ -144,12 +155,13 @@ public class RobotContainer {
   public RobotContainer() {
     NamedCommands.registerCommand("Shooter_al", shooter_saniye_al(s_yukari));
     NamedCommands.registerCommand("shooter_tukur", shooter_saniye_tukur(s_yukari));
-    NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -32.5, -30, -0.6)); 
+    NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -830., -30, -0.6)); 
     NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -16.5, -28, -0.6));
     NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -8, -28,-0.6));
     NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.0, 0.3));
-    NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -1, 0.3));
+    NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -2, 0.3));
     NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20.23,-0.3));
+    //NamedCommands.registerCommand("drivetopose", drivetoposition(s_Swerve, () -> new Pose2d(0.140, 1.335, new Rotation2d(180)), new PIDController(5, 0, 0), new PIDController(4, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
 
 
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -168,7 +180,9 @@ public class RobotContainer {
   private Command shooter_saniye_al(Peripheral s_yukari){
     return new shooter_saniye_al(s_yukari,6);
   }
- 
+ private Command drivetoposition(Swerve s_Swerve, Supplier<Pose2d> pose, PIDController pidX, PIDController pidY, ProfiledPIDController pidTheta){
+    return new DriveToPosition(s_Swerve, () -> new Pose2d(0, 0, new Rotation2d(0)), new PIDController(0.1, 0, 0), new PIDController(0.1, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1)));
+ }
   
 
   private Command elevator_otonom(Peripheral s_yukari,double position, double shooterTarget, double speed){
@@ -184,13 +198,18 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     try {
-    photon.whileTrue(new photonvision(s_Swerve, 7));
+    PhotonCamera camera = s_Vision.getCamera();  // Vision alt sisteminizin getCamera() metodunu ekleyin.
+    //aimattarget.whileTrue(new AimAtTarget(s_Swerve, camera));
+    
+    //photon.whileTrue(new photonvision(s_Swerve, 7));
     
     shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -1, -8, 0.3));
     shooter_duzelt.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 
-    aimtarget.whileTrue(s_Swerve.aimAtTarget());
+    // aimtarget.whileTrue(s_Swerve.aimAtTarget());
 
+    //driveToPos.whileTrue(new DriveToPosition(s_Swerve, () -> new Pose2d(0, 0, new Rotation2d(0)), new PIDController(0.1, 0, 0), new PIDController(0.1, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
+    
     elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -830.0, -30,  -0.4));
     elevator_l4Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
 

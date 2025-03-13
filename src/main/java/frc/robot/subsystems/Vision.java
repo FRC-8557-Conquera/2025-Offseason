@@ -57,7 +57,7 @@ public class Vision extends SubsystemBase {
      // Simulation
     private PhotonCameraSim cameraSim;
     private VisionSystemSim visionSim;
-    public static final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
+    public static final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark);
     private double maxAmbiguity = 0.25;
     private double longDistancePoseEstCount = 0;
     private Supplier<Pose2d> currentPose;
@@ -147,12 +147,12 @@ public class Vision extends SubsystemBase {
 
         field2d.getObject("tracked targets").setPoses(poses);
     }
+    public PhotonCamera getCamera() {
+    return Cameras.RAZER.camera;
+}
 
-
-
-    
     public enum Cameras {
-        RAZER("photonvision_Port_1182_Output_MJPEG_Server", new Rotation3d(0,0,0.52), new Translation3d(0.335,0.325,0.31), VecBuilder.fill(4,4,8), VecBuilder.fill(0.5,0.5,1));
+        RAZER("Razer", new Rotation3d(0,0,0.52), new Translation3d(0.335,0.325,0.31), VecBuilder.fill(4,4,8), VecBuilder.fill(0.5,0.5,1));
         public final Alert latencyAlert;
         public final PhotonCamera camera;
         public final PhotonPoseEstimator poseEstimator;

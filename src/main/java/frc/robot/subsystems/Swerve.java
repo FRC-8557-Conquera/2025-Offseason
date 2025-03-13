@@ -57,7 +57,7 @@ public class Swerve extends SubsystemBase {
   //private SwerveDriveOdometry swerveOdometry;
   private Field2d field;
   public SwerveDrive swerveDrive;
-  private final boolean visionDriveTest = false;
+  private final boolean visionDriveTest = true;
   public Vision vision;
   private File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
   public Swerve() {
@@ -146,27 +146,24 @@ public class Swerve extends SubsystemBase {
     swerveDrive.drive(velocity);
   }
 
-  public Command aimAtTarget() {
-    return run(() -> {
-    System.out.println("Komut geldi");
-      Optional<PhotonPipelineResult> resultO = Cameras.RAZER.getBestResult();
-      if (resultO.isPresent())
-      {
-        System.out.println("cam");
-        SmartDashboard.putString("vision", "Sonuc var");
-        var result = resultO.get();
-        if (result.hasTargets())
-        {
-        System.out.println("april geldi");
-        SmartDashboard.putString("vision", "Hedef var");
-          drive(getTargetSpeeds(0,
-                                0,
-                                Rotation2d.fromDegrees(result.getBestTarget()
-                                                             .getYaw()))); // Not sure if this will work, more math may be required.
-        }
-      }
-    });
-  }
+  // public Command aimAtTarget() {
+  //   return run(() -> {
+    
+  //     Optional<PhotonPipelineResult> resultO = Cameras.RAZER.getBestResult();
+  //     if (resultO.isPresent())
+  //     {
+        
+  //       var result = resultO.get();
+  //       if (result.hasTargets())
+  //       {
+  //         drive(getTargetSpeeds(0,
+  //                               0,
+  //                               Rotation2d.fromDegrees(result.getBestTarget()
+  //                                                            .getYaw()))); // Not sure if this will work, more math may be required.
+  //       }
+  //     }
+  //   });
+  // }
 
   public Command driveCommand( DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX) {
      
@@ -180,10 +177,6 @@ public class Swerve extends SubsystemBase {
       });
 
     }
-  public void addFakeVisionReading()
-  {
-    swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
-  }
 
   public void setupPhotonVision() {
     vision = new Vision(swerveDrive::getPose, swerveDrive.field);

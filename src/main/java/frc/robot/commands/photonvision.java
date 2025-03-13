@@ -47,7 +47,7 @@ public class photonvision extends Command {
                 // At least one AprilTag was seen by the camera
                 SmartDashboard.putString("vision","AprilTag var");
                 for (var target : result.getTargets()) {
-                    if (target.getFiducialId() == 7) {
+                    if (target.getFiducialId() == 21) {
                         SmartDashboard.putString("vision","Yedinci AprilTag var");
                         targetYaw = target.getYaw();
                         targetVisible = true;

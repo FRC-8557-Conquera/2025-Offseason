@@ -122,6 +122,9 @@ public final class Constants {
 
     /* Angle Encoder Invert */
     public static final boolean canCoderInvert = false;
-
+    
+    public static final double kTranslationVarianceThreshold = 0.1;  // Örneğin, 0.1 metre
+    public static final double kAngleVarianceThreshold = 5.0;  
+    
   }
 }
