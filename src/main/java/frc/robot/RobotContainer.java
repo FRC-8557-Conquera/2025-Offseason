@@ -160,10 +160,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -16.5, -28, -0.6));
     NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -8, -28,-0.6));
     NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.0, 0.3));
-    NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -2, 0.3));
+    NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -10.0, 0.2));
     NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20.23,-0.3));
-    NamedCommands.registerCommand("alignApril", alignWithAprilTag(s_Swerve, camera, 13));
-    //NamedCommands.registerCommand("drivetopose", drivetoposition(s_Swerve, () -> new Pose2d(0.140, 1.335, new Rotation2d(180)), new PIDController(5, 0, 0), new PIDController(4, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
+    NamedCommands.registerCommand("alignApril", alignWithAprilTag(s_Swerve, camera, 21));
 
 
     DriverStation.silenceJoystickConnectionWarning(true);
