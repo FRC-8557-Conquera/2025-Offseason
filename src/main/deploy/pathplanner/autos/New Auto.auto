@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "New New Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "alignApril"
           }
         }
       ]

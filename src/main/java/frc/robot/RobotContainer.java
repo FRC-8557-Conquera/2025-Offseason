@@ -112,8 +112,8 @@ public class RobotContainer {
   private final JoystickButton shooter_duzelt = 
   new JoystickButton(driver2 , 10);
  
-  // private final JoystickButton aimattarget = 
-  // new JoystickButton(driver, 5);
+  private final JoystickButton aimattarget = 
+  new JoystickButton(driver, 5);
 
   // private final JoystickButton photon =
   //new JoystickButton(driver, 9);
@@ -153,6 +153,7 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    PhotonCamera camera = s_Vision.getCamera();
     NamedCommands.registerCommand("Shooter_al", shooter_saniye_al(s_yukari));
     NamedCommands.registerCommand("shooter_tukur", shooter_saniye_tukur(s_yukari));
     NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -830., -30, -0.6)); 
@@ -161,6 +162,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.0, 0.3));
     NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -2, 0.3));
     NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20.23,-0.3));
+    NamedCommands.registerCommand("alignApril", alignWithAprilTag(s_Swerve, camera, 13));
     //NamedCommands.registerCommand("drivetopose", drivetoposition(s_Swerve, () -> new Pose2d(0.140, 1.335, new Rotation2d(180)), new PIDController(5, 0, 0), new PIDController(4, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
 
 
@@ -185,6 +187,10 @@ public class RobotContainer {
  }
   
 
+  private Command alignWithAprilTag(Swerve s_Swerve, PhotonCamera camera, int tagID) {
+    return new AlignWithAprilTag(s_Swerve, camera, tagID);
+  }
+
   private Command elevator_otonom(Peripheral s_yukari,double position, double shooterTarget, double speed){
     return new elevator_otonom(s_yukari,position,shooterTarget,speed);
   }
@@ -199,7 +205,7 @@ public class RobotContainer {
 
     try {
     PhotonCamera camera = s_Vision.getCamera();  // Vision alt sisteminizin getCamera() metodunu ekleyin.
-    //aimattarget.whileTrue(new AimAtTarget(s_Swerve, camera));
+    aimattarget.whileTrue(new AlignWithAprilTag(s_Swerve, camera,21));
     
     //photon.whileTrue(new photonvision(s_Swerve, 7));
     
