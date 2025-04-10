@@ -23,13 +23,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "elevator_l2"
+                  "name": "elevator_l4"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.5
+                  "waitTime": 2.0
                 }
               },
               {
@@ -48,12 +48,6 @@
                 "type": "named",
                 "data": {
                   "name": "elevator_kapa"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "erene_duzelt"
                 }
               }
             ]
@@ -72,7 +66,19 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shooter_al"
+                  "name": "erene_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter_al"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter_duzelt"
                 }
               }
             ]
@@ -91,19 +97,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shooter_duzelt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "elevator_l4"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.5
+                  "waitTime": 2.0
                 }
               },
               {
@@ -115,19 +115,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "erene_duzelt"
+                  "name": "Shooter_duzelt"
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "elevator_kapa"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "erene_duzelt"
                 }
               }
             ]
@@ -140,65 +134,15 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "shooter_al"
-                }
-              }
-            ]
+            "waitTime": 2.0
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "5"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shooter_duzelt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "elevator_l4"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shooter_tukur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shooter_duzelt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "elevator_kapa"
-                }
-              }
-            ]
           }
         }
       ]

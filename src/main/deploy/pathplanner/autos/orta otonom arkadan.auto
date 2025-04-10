@@ -5,15 +5,52 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Shooter_duzelt"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "or1"
           }
         },
         {
-          "type": "wait",
+          "type": "sequential",
           "data": {
-            "waitTime": 5.0
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_l4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shooter_tukur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shooter_duzelt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "elevator_kapa"
+                }
+              }
+            ]
           }
         },
         {
@@ -23,21 +60,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 5.0
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "or3"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 5.0
           }
         },
         {

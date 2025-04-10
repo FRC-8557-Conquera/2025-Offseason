@@ -122,6 +122,9 @@ public class RobotContainer {
   
     private final JoystickButton shooter_duzelt = 
     new JoystickButton(driver2 , 10);
+
+    private final JoystickButton manualElevator =
+    new JoystickButton(driver2, 5);
    
     private final JoystickButton aimattarget = 
     new JoystickButton(driver, 5);
@@ -167,12 +170,12 @@ public class RobotContainer {
       PhotonCamera camera = s_Vision.getCamera();
       NamedCommands.registerCommand("Shooter_al", shooter_saniye_al(s_yukari));
       NamedCommands.registerCommand("shooter_tukur", shooter_saniye_tukur(s_yukari));
-      NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -830., -30, -0.6)); 
-      NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -16.5, -28, -0.6));
-      NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -8, -28,-0.6));
-      NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -1, -12.0, 0.3));
-      NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -10.0, 0.2));
-      NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20.23,-0.3));
+      NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -892, -42, -0.5)); 
+      NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -456, -42, -0.5));
+      NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -135, -37,-0.5));
+      NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -92, -11.5, -0.4));
+      NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -5.0, 0.2));
+      NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20,-0.3));
       NamedCommands.registerCommand("alignApril", alignWithAprilTag(s_Swerve, camera, 21));
   
   
@@ -219,20 +222,22 @@ public class RobotContainer {
       
 //      photon.whileTrue(new RunCommand(() -> photonvision(s_Swerve, camera, 21), s_Swerve));
 
-      shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -1, -8, 0.3));
+      shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -54, -12, -0.4));
       shooter_duzelt.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
   
       // aimtarget.whileTrue(s_Swerve.aimAtTarget());
-  
       //driveToPos.whileTrue(new DriveToPosition(s_Swerve, () -> new Pose2d(0, 0, new Rotation2d(0)), new PIDController(0.1, 0, 0), new PIDController(0.1, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
       
-      elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -830.0, -30,  -0.4));
+      manualElevator.whileTrue(new RunCommand(() -> s_yukari.elevatorAc(), s_yukari));
+      manualElevator.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(),s_yukari));
+
+      elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -892.0, -42,  -0.5));
       elevator_l4Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
   
-      elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -16.5, -30,-0.4));
+      elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -456, -42,-0.4));
       elevator_l3Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
   
-      elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -8, -28.5,-0.4));
+      elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -135, -37,-0.4));
       elevator_l2Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
   
       shooter_Aci_Asagi.whileTrue(new RunCommand(() -> s_yukari.ShooteraciAsagi(), s_yukari));
@@ -241,7 +246,7 @@ public class RobotContainer {
       shooter_Aci_Yukari.whileTrue(new RunCommand(()-> s_yukari.ShooteraciYukari(), s_yukari));
       shooter_Aci_Yukari.whileFalse(new RunCommand(()-> s_yukari.ShooteraciDurdur(), s_yukari));
   
-      elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -10.0, 0.2));
+      elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -0.0, 0.2));
       elevator_kapat.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
   
   

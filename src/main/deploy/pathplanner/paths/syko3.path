@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6451819112578683,
-        "y": 2.161757776125346
+        "x": 2.302449324324325,
+        "y": 1.3766891891891897
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.9288068181818185,
-        "y": 2.7237073863636363
+        "x": 3.963,
+        "y": 2.8688344594594595
       },
       "prevControl": {
-        "x": 3.8135562810323362,
-        "y": 2.5018576316043495
+        "x": 3.8477494628505178,
+        "y": 2.6469847047001727
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 61.0
   },
   "reversed": false,
   "folder": "otonom en sağ",

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.929,
-        "y": 2.724
+        "x": 3.963,
+        "y": 2.869
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3751805466432137,
-        "y": 2.543089265850791
+        "x": 3.4289695945945944,
+        "y": 2.3648648648648645
       },
       "isLocked": false,
       "linkedName": null
@@ -48,7 +48,7 @@
   "folder": "otonom en sağ",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 61.0
   },
   "useDefaultConstraints": true
 }

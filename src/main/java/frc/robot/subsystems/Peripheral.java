@@ -67,8 +67,8 @@ public class Peripheral extends SubsystemBase {
         
     }
     public void elevatorDurdur(){
-        elevatorsolm.set(-0.04);
-        elevatatorsagm.set(-0.04);
+        elevatorsolm.set(-0.05);
+        elevatatorsagm.set(-0.05);
     }
     
     public void setShooterAngle(double targetAngle) {
@@ -87,9 +87,9 @@ public class Peripheral extends SubsystemBase {
         climbmotor.set(0);
     }
     public void shooterTukur(){
-        shooter.set(-0.4);
+        shooter.set(-0.5);
     }
-    public void shooteryavas(){
+    public void shooteryavas(){ 
         shooter.set(0.1);
     }
     public void shooterIcineal(){
@@ -102,10 +102,10 @@ public class Peripheral extends SubsystemBase {
         shooteraci.set(0);
     }
     public void ShooteraciYukari(){
-        shooteraci.set(0.6);
+        shooteraci.set(0.4);
     }
     public void ShooteraciAsagi(){
-        shooteraci.set(-0.4);
+        shooteraci.set(-0.3);
     }
     public double getEncoderPosition() {
         return enccodersol.getPosition(); 
