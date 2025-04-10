@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.lib.config.CTREConfigs;
 import frc.robot.subsystems.Peripheral;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision.Cameras;
@@ -42,7 +41,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static CTREConfigs ctreConfigs;
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
   private final Joystick driver = new Joystick(0); 

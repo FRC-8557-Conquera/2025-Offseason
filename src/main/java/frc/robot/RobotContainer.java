@@ -143,9 +143,6 @@ public class RobotContainer {
   
     public final Vision s_Vision = s_Swerve.vision;
   
-    public final climb_in climb_in = new climb_in(s_yukari);
-    public final climb_bas climb_bas = new climb_bas(s_yukari); 
-  
     //public final shooter_vur shooter_tukur = new shooter_vur(s_yukari);
     //public final shooter_al shooter_icineal = new shooter_al(s_yukari);
   
@@ -195,11 +192,8 @@ public class RobotContainer {
     private Command shooter_saniye_al(Peripheral s_yukari){
       return new shooter_saniye_al(s_yukari,6);
     }
-   private Command drivetoposition(Swerve s_Swerve, Supplier<Pose2d> pose, PIDController pidX, PIDController pidY, ProfiledPIDController pidTheta){
-      return new DriveToPosition(s_Swerve, () -> new Pose2d(0, 0, new Rotation2d(0)), new PIDController(0.1, 0, 0), new PIDController(0.1, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1)));
-   }
-    
-  
+
+
     private Command alignWithAprilTag(Swerve s_Swerve, PhotonCamera camera, int tagID) {
       return new AlignWithAprilTag(s_Swerve, camera, tagID);
     }
@@ -208,7 +202,7 @@ public class RobotContainer {
       return new elevator_otonom(s_yukari,position,shooterTarget,speed);
     }
     private Command elevator_kapat(Peripheral s_yukari, double position, double speed) {
-      return new elevator_to_autonom_kapat(s_yukari, position, speed);
+      return new elevator_otonom(s_yukari, position, s_yukari.getEncoderAciPosition(), speed);
     }
     //  private Command decSpeed (Swerve s_Swerve, double maxSpeed){
     //    return new RunCommand(() -> s_Swerve, s_Swerve.setMaximumSpeed -= 1);
@@ -223,48 +217,48 @@ public class RobotContainer {
 //      photon.whileTrue(new RunCommand(() -> photonvision(s_Swerve, camera, 21), s_Swerve));
 
       shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -54, -12, -0.4));
-      shooter_duzelt.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+      shooter_duzelt.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
       // aimtarget.whileTrue(s_Swerve.aimAtTarget());
       //driveToPos.whileTrue(new DriveToPosition(s_Swerve, () -> new Pose2d(0, 0, new Rotation2d(0)), new PIDController(0.1, 0, 0), new PIDController(0.1, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
       
-      manualElevator.whileTrue(new RunCommand(() -> s_yukari.elevatorAc(), s_yukari));
-      manualElevator.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(),s_yukari));
+      manualElevator.whileTrue(new RunCommand(s_yukari::elevatorAc, s_yukari));
+      manualElevator.whileFalse(new RunCommand(s_yukari::elevatorDurdur,s_yukari));
 
       elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -892.0, -42,  -0.5));
-      elevator_l4Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+      elevator_l4Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
       elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -456, -42,-0.4));
-      elevator_l3Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+      elevator_l3Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
       elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -135, -37,-0.4));
-      elevator_l2Button.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+      elevator_l2Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
-      shooter_Aci_Asagi.whileTrue(new RunCommand(() -> s_yukari.ShooteraciAsagi(), s_yukari));
-      shooter_Aci_Asagi.whileFalse(new RunCommand(() -> s_yukari.ShooteraciDurdur(), s_yukari));
+      shooter_Aci_Asagi.whileTrue(new RunCommand(s_yukari::ShooteraciAsagi, s_yukari));
+      shooter_Aci_Asagi.whileFalse(new RunCommand(s_yukari::ShooteraciDurdur, s_yukari));
   
-      shooter_Aci_Yukari.whileTrue(new RunCommand(()-> s_yukari.ShooteraciYukari(), s_yukari));
-      shooter_Aci_Yukari.whileFalse(new RunCommand(()-> s_yukari.ShooteraciDurdur(), s_yukari));
+      shooter_Aci_Yukari.whileTrue(new RunCommand(s_yukari::ShooteraciYukari, s_yukari));
+      shooter_Aci_Yukari.whileFalse(new RunCommand(s_yukari::ShooteraciDurdur, s_yukari));
   
-      elevator_kapat.whileTrue(new elevator_to_autonom_kapat(s_yukari, -0.0, 0.2));
-      elevator_kapat.whileFalse(new RunCommand(() -> s_yukari.elevatorDurdur(), s_yukari));
+      elevator_kapat.whileTrue(new elevator_otonom(s_yukari, -0.0, s_yukari.getEncoderAciPosition(), 0.2));
+      elevator_kapat.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
   
-      climb_Bas.whileTrue(new RunCommand(() -> s_yukari.climbBas(), s_yukari));
-      climb_Bas.whileFalse(new RunCommand(() -> s_yukari.climbDur(), s_yukari));
+      climb_Bas.whileTrue(new RunCommand(s_yukari::climbBas, s_yukari));
+      climb_Bas.whileFalse(new RunCommand(s_yukari::climbDur, s_yukari));
       
-      climb_In.whileTrue(new RunCommand(() -> s_yukari.climbIn(), s_yukari));
-      climb_In.whileFalse(new RunCommand(() -> s_yukari.climbDur(), s_yukari));
+      climb_In.whileTrue(new RunCommand(s_yukari::climbIn, s_yukari));
+      climb_In.whileFalse(new RunCommand(s_yukari::climbDur, s_yukari));
   
-      zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+      zeroGyro.onTrue(new InstantCommand(s_Swerve::zeroGyro));
   
-      xLock.whileTrue(Commands.runOnce((() -> s_Swerve.lock()), s_Swerve).repeatedly());
+      xLock.whileTrue(Commands.runOnce((s_Swerve::lock), s_Swerve).repeatedly());
   
-      shooter_Tukur.whileTrue(new RunCommand(() -> s_yukari.shooterTukur(), s_yukari));
-      shooter_Tukur.whileFalse(new RunCommand(() -> s_yukari.shooterDurdur(), s_yukari));
+      shooter_Tukur.whileTrue(new RunCommand(s_yukari::shooterTukur, s_yukari));
+      shooter_Tukur.whileFalse(new RunCommand(s_yukari::shooterDurdur, s_yukari));
   
-      shooter_IcineAl.whileTrue(new RunCommand(() -> s_yukari.shooterIcineal(), s_yukari));
-      shooter_IcineAl.whileFalse(new RunCommand(() -> s_yukari.shooterDurdur(), s_yukari));
+      shooter_IcineAl.whileTrue(new RunCommand(s_yukari::shooterIcineal, s_yukari));
+      shooter_IcineAl.whileFalse(new RunCommand(s_yukari::shooterDurdur, s_yukari));
   
       Thread.sleep(10);
        
@@ -274,57 +268,6 @@ public class RobotContainer {
     }
       
     }
-  /*public Command photonvision(Swerve s_Swerve, PhotonCamera camera, int tagID) {
-    double forward = -driver.getAxisType(1) * Constants.Swerve.maxSpeed;
-    double strafe = -driver.getAxisType(0) * Constants.Swerve.maxSpeed;
-    double turn = -driver.getAxisType(3) * Constants.Swerve.maxAngularVelocity;
-
-    // Read in relevant data from the Camera
-    boolean targetVisible = false;
-    double targetYaw = 0.0;
-    double targetRange = 0.0;
-    var results = Cameras.RAZER.getLatestResult();
-    if (!results.isEmpty()) {
-        // Camera processed a new frame since last
-        // Get the last one in the list.
-        var result = results.get();
-        if (result.hasTargets()) {
-            // At least one AprilTag was seen by the camera
-            for (var target : result.getTargets()) {
-                if (target.getFiducialId() == tagID) {
-                    // Found Tag 7, record its information
-                    targetYaw = target.getYaw();
-                    targetRange =
-                            PhotonUtils.calculateDistanceToTargetMeters(
-                                    0.5, // Measured with a tape measure, or in CAD.
-                                    1.435, // From 2024 game manual for ID 7
-                                    Units.degreesToRadians(-30.0), // Measured with a protractor, or in CAD.
-                                    Units.degreesToRadians(target.getPitch()));
-
-                    targetVisible = true;
-                }
-                
-            }
-            
-        }
-       
-      }
-    // Auto-align when requested
-    if (driver.getRawButton(5) && targetVisible) {
-        // Driver wants auto-alignment to tag 7
-        // And, tag 7 is in sight, so we can turn toward it.
-        // Override the driver's turn and fwd/rev command with an automatic one
-        // That turns toward the tag, and gets the range right.
-        turn =
-                (VISION_DES_ANGLE_deg - targetYaw) * VISION_TURN_kP * Constants.Swerve.maxSpeed;
-      forward =
-              (VISION_DES_RANGE_m - targetRange) * VISION_STRAFE_kP * Constants.Swerve.maxSpeed;
-  }
-
-  // Command drivetrain motors based on target speeds
-  s_Swerve.getSwerveDrive().drive(new ChassisSpeeds(forward, strafe, turn), false, new Translation2d());
-  return null;
-  }*/
   
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
