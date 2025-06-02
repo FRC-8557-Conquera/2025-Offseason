@@ -34,6 +34,10 @@ public final class Constants {
   public static final class ShooterConstants {
       public static final int shooterID = 35;
   }
+  public static final class IntakeConstants {
+    public static final int intakeLeftID = 33;
+    public static final int intakeRightID = 34;
+  }
   public static final class yukari{
     public static final int solelevator = 31;
     public static final int sagelevator = 32;
