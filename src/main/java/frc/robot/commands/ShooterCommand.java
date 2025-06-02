@@ -2,20 +2,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Peripheral;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class ShooterIntakeCommand extends Command {
-    private final Peripheral peripheral;
+public class ShooterCommand extends Command {
+    private final IntakeSubsystem intake;
     private final Timer timer = new Timer();
     private final double duration;
     private final boolean dir;
 
-    public ShooterIntakeCommand(Peripheral shooter, double duration, boolean dir) {
+    public ShooterCommand(IntakeSubsystem intake, double duration, boolean dir) {
         // 0 = içeri, 1 = dışarı
-        this.peripheral = shooter;
+        this.intake = intake;
         this.duration = duration;
         this.dir = dir;
-        addRequirements(shooter);
+        addRequirements(intake);
     }
 
     @Override
@@ -26,10 +26,10 @@ public class ShooterIntakeCommand extends Command {
 
     @Override
     public void execute() {
-        if (dir) {
-            peripheral.shooterIcineal();
+        if (!dir) {
+            intake.setShooter(0.8);
         } else {
-            peripheral.shooterTukur();
+            intake.setShooter(-0.8);
         }
     }
 
@@ -40,7 +40,7 @@ public class ShooterIntakeCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        peripheral.shooterDurdur();
+        intake.setShooter(0);
         timer.stop();
     }
 }

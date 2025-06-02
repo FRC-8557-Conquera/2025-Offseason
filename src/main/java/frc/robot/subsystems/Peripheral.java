@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import java.lang.module.ResolutionException;
 import java.util.logging.LogManager;
 
-import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkMax;

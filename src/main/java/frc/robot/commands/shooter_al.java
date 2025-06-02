@@ -24,7 +24,6 @@ public class shooter_al extends Command {
     }
     @Override
     public boolean isFinished(){
-        shooter.shooterDurdur();
         return false;
     }
     

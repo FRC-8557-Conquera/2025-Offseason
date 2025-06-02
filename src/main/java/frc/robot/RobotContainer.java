@@ -138,16 +138,14 @@ public class RobotContainer {
   
     public final Swerve s_Swerve = new Swerve();
     public final Peripheral s_yukari = new Peripheral();
-    // 
+    public final IntakeSubsystem intake = new IntakeSubsystem();
+
     //public final Vision vision = new Vision(s_Swerve::getPose, new edu.wpi.first.wpilibj.smartdashboard.Field2d());
   
     public final Vision s_Vision = s_Swerve.vision;
   
     //public final shooter_vur shooter_tukur = new shooter_vur(s_yukari);
     //public final shooter_al shooter_icineal = new shooter_al(s_yukari);
-  
-    public final shooter_yukari shooter_aci_yukari = new shooter_yukari(s_yukari);
-    public final shooter_asagi shooter_aci_asagi = new shooter_asagi(s_yukari);
   
     SwerveInputStream driveAngularVelocity = SwerveInputStream.of(s_Swerve.getSwerveDrive(), () -> -driver.getY(), () -> -driver.getX())
     .withControllerRotationAxis(() -> -driver.getZ())
@@ -165,14 +163,15 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
       PhotonCamera camera = s_Vision.getCamera();
-      NamedCommands.registerCommand("Shooter_al", shooter_saniye_al(s_yukari));
-      NamedCommands.registerCommand("shooter_tukur", shooter_saniye_tukur(s_yukari));
-      NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -892, -42, -0.5)); 
-      NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -456, -42, -0.5));
-      NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -135, -37,-0.5));
-      NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -92, -11.5, -0.4));
-      NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -5.0, 0.2));
-      NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20,-0.3));
+      NamedCommands.registerCommand("ShooterIntake", new ShooterCommand(intake, 1.5, false));
+      NamedCommands.registerCommand("ShooterSpit", new ShooterCommand(intake, 1.5, true));
+
+//      NamedCommands.registerCommand("elevator_l4", elevator_otonom(s_yukari, -892, -42, -0.5));
+//      NamedCommands.registerCommand("elevator_l3", elevator_otonom(s_yukari, -456, -42, -0.5));
+//      NamedCommands.registerCommand("elevator_l2", elevator_otonom(s_yukari, -135, -37,-0.5));
+//      NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -92, -11.5, -0.4));
+//      NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -5.0, 0.2));
+//      NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20,-0.3));
       NamedCommands.registerCommand("alignApril", alignWithAprilTag(s_Swerve, camera, 21));
   
   
@@ -186,24 +185,13 @@ public class RobotContainer {
     
     
     }
-    private Command shooter_saniye_tukur(Peripheral s_yukari){
-      return new shooter_saniye_tukur(s_yukari, 1.5);
-    }
-    private Command shooter_saniye_al(Peripheral s_yukari){
-      return new shooter_saniye_al(s_yukari,6);
-    }
 
 
     private Command alignWithAprilTag(Swerve s_Swerve, PhotonCamera camera, int tagID) {
       return new AlignWithAprilTag(s_Swerve, camera, tagID);
     }
 
-    private Command elevator_otonom(Peripheral s_yukari,double position, double shooterTarget, double speed){
-      return new elevator_otonom(s_yukari,position,shooterTarget,speed);
-    }
-    private Command elevator_kapat(Peripheral s_yukari, double position, double speed) {
-      return new elevator_otonom(s_yukari, position, s_yukari.getEncoderAciPosition(), speed);
-    }
+//    }
     //  private Command decSpeed (Swerve s_Swerve, double maxSpeed){
     //    return new RunCommand(() -> s_Swerve, s_Swerve.setMaximumSpeed -= 1);
     //  }
@@ -216,7 +204,7 @@ public class RobotContainer {
       
 //      photon.whileTrue(new RunCommand(() -> photonvision(s_Swerve, camera, 21), s_Swerve));
 
-      shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -54, -12, -0.4));
+//      shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -54, -12, -0.4));
       shooter_duzelt.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
       // aimtarget.whileTrue(s_Swerve.aimAtTarget());
@@ -225,13 +213,13 @@ public class RobotContainer {
       manualElevator.whileTrue(new RunCommand(s_yukari::elevatorAc, s_yukari));
       manualElevator.whileFalse(new RunCommand(s_yukari::elevatorDurdur,s_yukari));
 
-      elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -892.0, -42,  -0.5));
+//      elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -892.0, -42,  -0.5));
       elevator_l4Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
-      elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -456, -42,-0.4));
+//      elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -456, -42,-0.4));
       elevator_l3Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
-      elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -135, -37,-0.4));
+//      elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -135, -37,-0.4));
       elevator_l2Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
       shooter_Aci_Asagi.whileTrue(new RunCommand(s_yukari::ShooteraciAsagi, s_yukari));
@@ -240,7 +228,7 @@ public class RobotContainer {
       shooter_Aci_Yukari.whileTrue(new RunCommand(s_yukari::ShooteraciYukari, s_yukari));
       shooter_Aci_Yukari.whileFalse(new RunCommand(s_yukari::ShooteraciDurdur, s_yukari));
   
-      elevator_kapat.whileTrue(new elevator_otonom(s_yukari, -0.0, s_yukari.getEncoderAciPosition(), 0.2));
+//      elevator_kapat.whileTrue(new elevator_otonom(s_yukari, -0.0, s_yukari.getEncoderAciPosition(), 0.2));
       elevator_kapat.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
   
   
