@@ -1,8 +1,18 @@
 package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 
 
@@ -37,35 +47,13 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int intakeLeftID = 33;
     public static final int intakeRightID = 34;
+    public static final int intakeAngleID = 36;
   }
-  public static final class yukari{
-    public static final int solelevator = 31;
-    public static final int sagelevator = 32;
-    public static final int climbmotor = 30;
-    public static final int shooter = 35;
-    public static final int shootertaci = 34;
-    //--------------------------------------------------
-//ELEVATOR:
-    //pıd değerler(örnek değerler; değişecek)
-    public final static double kP = 0.1; //.068
-    public final static double kI = 0.0;
-    public final static double kD = 0.00; //.005
 
-    public final static double kS = 0.0;
-    public final static double kG = 0.075; //.07
-    public final static double kV = 0.0;
-    public final static double kA = 0.0;
-
-    public static final double pulleyDiameterMeters = 0.05 ; // 0.05metre
-    public static final double pulleyCircumference = Math.PI * pulleyDiameterMeters;
-    public static final double gearReduction = 6.8;  // Örneğin, 10:1 oran
-    public static final double encoderConversionFactor = pulleyCircumference / gearReduction;
-    // Bu, motor enkoder sayısını (dönüş) metreye çevirecektir.
-    // Maksimum ve minimum elevator yüksekliği (metre cinsinden)
-    public static final double minHeight = 0.0;
-    public static final double maxHeight = 2.0;  // 2 metre
-
+  public static final class ClimberConstants {
+    public static final int climbID = 30;
   }
+
   public static final class Swerve {
 
     public static final double stickDeadband = 0.09;
@@ -144,4 +132,20 @@ public final class Constants {
     public static final double kAngleVarianceThreshold = 5.0;
 
   }
+
+  public static class VisionConstants {
+        public static final String kCameraName = "razer";
+        // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+        public static final Transform3d kRobotToCam =
+                new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0, 0, 0));
+
+        // The layout of the AprilTags on the field
+        public static final AprilTagFieldLayout kTagLayout =
+                AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark);
+
+        // The standard deviations of our vision estimated poses, which affect correction rate
+        // (Fake values. Experiment and determine estimation noise on an actual robot.)
+        public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4, 4, 8);
+        public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
+    }
 }

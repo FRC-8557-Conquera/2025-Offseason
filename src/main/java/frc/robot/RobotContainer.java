@@ -57,12 +57,10 @@ import frc.robot.Constants;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.Vision.Cameras;
 import pabeles.concurrency.ConcurrencyOps.NewInstance;
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import frc.robot.Robot;
-import frc.robot.Constants.yukari;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 public class RobotContainer {
 
@@ -137,12 +135,12 @@ public class RobotContainer {
   
   
     public final Swerve s_Swerve = new Swerve();
-    public final Peripheral s_yukari = new Peripheral();
+    public final ElevatorSubsystem elevator = new ElevatorSubsystem();
+    public final ClimberSubsystem climb = new ClimberSubsystem();
     public final IntakeSubsystem intake = new IntakeSubsystem();
+    public final Vision vision = new Vision(s_Swerve::addVisionMeasurement);
 
     //public final Vision vision = new Vision(s_Swerve::getPose, new edu.wpi.first.wpilibj.smartdashboard.Field2d());
-  
-    public final Vision s_Vision = s_Swerve.vision;
   
     //public final shooter_vur shooter_tukur = new shooter_vur(s_yukari);
     //public final shooter_al shooter_icineal = new shooter_al(s_yukari);
@@ -150,7 +148,7 @@ public class RobotContainer {
     SwerveInputStream driveAngularVelocity = SwerveInputStream.of(s_Swerve.getSwerveDrive(), () -> -driver.getY(), () -> -driver.getX())
     .withControllerRotationAxis(() -> -driver.getZ())
     .deadband(Constants.Swerve.stickDeadband)
-    .scaleTranslation(0.8) // YAVASLATMA!!!!
+    .scaleTranslation(1)
     .allianceRelativeControl(true);
     SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(() -> driver.getRawAxis(2), () -> driver.getRawAxis(3)).headingWhile(true);
   
@@ -162,7 +160,6 @@ public class RobotContainer {
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-      PhotonCamera camera = s_Vision.getCamera();
       NamedCommands.registerCommand("ShooterIntake", new ShooterCommand(intake, 1.5, false));
       NamedCommands.registerCommand("ShooterSpit", new ShooterCommand(intake, 1.5, true));
 
@@ -172,7 +169,7 @@ public class RobotContainer {
 //      NamedCommands.registerCommand("erene_duzelt", elevator_otonom(s_yukari, -92, -11.5, -0.4));
 //      NamedCommands.registerCommand("elevator_kapa", elevator_kapat(s_yukari, -5.0, 0.2));
 //      NamedCommands.registerCommand("Shooter_duzelt", elevator_otonom(s_yukari, -0, -20,-0.3));
-      NamedCommands.registerCommand("alignApril", alignWithAprilTag(s_Swerve, camera, 21));
+      //NamedCommands.registerCommand("alignApril", alignWithAprilTag(s_Swerve, camera, 21));
   
   
       DriverStation.silenceJoystickConnectionWarning(true);
@@ -187,9 +184,8 @@ public class RobotContainer {
     }
 
 
-    private Command alignWithAprilTag(Swerve s_Swerve, PhotonCamera camera, int tagID) {
-      return new AlignWithAprilTag(s_Swerve, camera, tagID);
-    }
+    //private Command alignWithAprilTag(Swerve s_Swerve, PhotonCamera camera, int tagID) {
+    //}
 
 //    }
     //  private Command decSpeed (Swerve s_Swerve, double maxSpeed){
@@ -199,54 +195,43 @@ public class RobotContainer {
     private void configureButtonBindings() {
   
       try {
-      PhotonCamera camera = s_Vision.getCamera();  // Vision alt sisteminizin getCamera() metodunu ekleyin.
-      aimattarget.whileTrue(new AlignWithAprilTag(s_Swerve, camera,21));
+      // Vision alt sisteminizin getCamera() metodunu ekleyin.
+      // aimattarget.whileTrue(new AlignWithAprilTag(s_Swerve, camera,21));
       
 //      photon.whileTrue(new RunCommand(() -> photonvision(s_Swerve, camera, 21), s_Swerve));
-
-//      shooter_duzelt.whileTrue(new elevator_otonom(s_yukari, -54, -12, -0.4));
-      shooter_duzelt.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
-  
       // aimtarget.whileTrue(s_Swerve.aimAtTarget());
       //driveToPos.whileTrue(new DriveToPosition(s_Swerve, () -> new Pose2d(0, 0, new Rotation2d(0)), new PIDController(0.1, 0, 0), new PIDController(0.1, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
       
-      manualElevator.whileTrue(new RunCommand(s_yukari::elevatorAc, s_yukari));
-      manualElevator.whileFalse(new RunCommand(s_yukari::elevatorDurdur,s_yukari));
+      manualElevator.whileTrue(new RunCommand(elevator::openElevator, elevator));
+      manualElevator.whileFalse(new RunCommand(elevator::stop, elevator));
 
-//      elevator_l4Button.whileTrue(new elevator_otonom(s_yukari,  -892.0, -42,  -0.5));
-      elevator_l4Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
+      elevator_kapat.whileTrue(new RunCommand(elevator::closeElevator, elevator));
+      elevator_kapat.whileFalse(new RunCommand(elevator::stop, elevator));
+
+//      elevator_l4Button.whileTrue(new ElevatorCommand(elevator,  -892.0, -42,  -0.5));
+      elevator_l4Button.whileFalse(new RunCommand(elevator::stop, elevator));
   
 //      elevator_l3Button.whileTrue(new elevator_otonom(s_yukari, -456, -42,-0.4));
-      elevator_l3Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
+      elevator_l3Button.whileFalse(new RunCommand(elevator::stop, elevator));
   
 //      elevator_l2Button.whileTrue(new elevator_otonom(s_yukari, -135, -37,-0.4));
-      elevator_l2Button.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
+      elevator_l2Button.whileFalse(new RunCommand(elevator::stop, elevator));
   
-      shooter_Aci_Asagi.whileTrue(new RunCommand(s_yukari::ShooteraciAsagi, s_yukari));
-      shooter_Aci_Asagi.whileFalse(new RunCommand(s_yukari::ShooteraciDurdur, s_yukari));
-  
-      shooter_Aci_Yukari.whileTrue(new RunCommand(s_yukari::ShooteraciYukari, s_yukari));
-      shooter_Aci_Yukari.whileFalse(new RunCommand(s_yukari::ShooteraciDurdur, s_yukari));
-  
-//      elevator_kapat.whileTrue(new elevator_otonom(s_yukari, -0.0, s_yukari.getEncoderAciPosition(), 0.2));
-      elevator_kapat.whileFalse(new RunCommand(s_yukari::elevatorDurdur, s_yukari));
-  
-  
-      climb_Bas.whileTrue(new RunCommand(s_yukari::climbBas, s_yukari));
-      climb_Bas.whileFalse(new RunCommand(s_yukari::climbDur, s_yukari));
+      climb_Bas.whileTrue(new RunCommand(climb::climbPress, climb));
+      climb_Bas.whileFalse(new RunCommand(climb::climbStop, climb));
       
-      climb_In.whileTrue(new RunCommand(s_yukari::climbIn, s_yukari));
-      climb_In.whileFalse(new RunCommand(s_yukari::climbDur, s_yukari));
+      climb_In.whileTrue(new RunCommand(climb::climbWithdraw, climb));
+      climb_In.whileFalse(new RunCommand(climb::climbStop, climb));
   
       zeroGyro.onTrue(new InstantCommand(s_Swerve::zeroGyro));
   
       xLock.whileTrue(Commands.runOnce((s_Swerve::lock), s_Swerve).repeatedly());
   
-      shooter_Tukur.whileTrue(new RunCommand(s_yukari::shooterTukur, s_yukari));
-      shooter_Tukur.whileFalse(new RunCommand(s_yukari::shooterDurdur, s_yukari));
+      shooter_Tukur.whileTrue(new RunCommand(intake::shooterSpit, intake));
+      shooter_Tukur.whileFalse(new RunCommand(intake::shooterStop, intake));
   
-      shooter_IcineAl.whileTrue(new RunCommand(s_yukari::shooterIcineal, s_yukari));
-      shooter_IcineAl.whileFalse(new RunCommand(s_yukari::shooterDurdur, s_yukari));
+      shooter_IcineAl.whileTrue(new RunCommand(intake::shooterIntake, intake));
+      shooter_IcineAl.whileFalse(new RunCommand(intake::shooterStop, intake));
   
       Thread.sleep(10);
        
