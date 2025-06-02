@@ -26,7 +26,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     );
     private final ElevatorFeedforward elevatorFeedforward = new ElevatorFeedforward(
             Constants.ElevatorConstants.kS,
-            Constants.ElevatorConstants.kG,
+            Constants.ElevatorConstants.kG, 
             Constants.ElevatorConstants.kV,
             Constants.ElevatorConstants.kA
     );
