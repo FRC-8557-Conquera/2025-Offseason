@@ -1,9 +1,7 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.Peripheral;
 
 public class ElevatorCommand extends Command {
     private final ElevatorSubsystem elevator;

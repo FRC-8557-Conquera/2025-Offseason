@@ -26,7 +26,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     );
     private final ElevatorFeedforward elevatorFeedforward = new ElevatorFeedforward(
             Constants.ElevatorConstants.kS,
-            Constants.ElevatorConstants.kG,
+            Constants.ElevatorConstants.kG, 
             Constants.ElevatorConstants.kV,
             Constants.ElevatorConstants.kA
     );
@@ -75,5 +75,17 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void stop() {
         leftMotor.set(0);
+    }
+
+    public void resetEncoder(){
+        leftEncoder.setPosition(0);
+    }
+
+    public void openElevator() {
+        leftMotor.set(0.5);
+    }
+
+    public void closeElevator() {
+        leftMotor.set(-0.5);
     }
 }
