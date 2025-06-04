@@ -202,7 +202,7 @@ public class RobotContainer {
       // aimtarget.whileTrue(s_Swerve.aimAtTarget());
       //driveToPos.whileTrue(new DriveToPosition(s_Swerve, () -> new Pose2d(0, 0, new Rotation2d(0)), new PIDController(0.1, 0, 0), new PIDController(0.1, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
       
-      manualElevator.whileTrue(new RunCommand(elevator::openElevator, elevator));
+      manualElevator.whileTrue(new RunCommand(elevator::openElevator, elevator).repeatedly());
       manualElevator.whileFalse(new RunCommand(elevator::stop, elevator));
 
       elevator_kapat.whileTrue(new RunCommand(elevator::closeElevator, elevator));
@@ -234,6 +234,8 @@ public class RobotContainer {
       shooter_IcineAl.whileFalse(new RunCommand(intake::shooterStop, intake));
   
       Thread.sleep(10);
+
+      SmartDashboard.putNumber("Elevator Encoder", elevator.getEncoderPosition());
        
        
     } catch (InterruptedException ex) {

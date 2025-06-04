@@ -5,6 +5,8 @@ import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -36,7 +38,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         leftMotor.configure(config, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
 
         SparkMaxConfig followerConfig = new SparkMaxConfig();
-        followerConfig.follow(leftMotor);
+        followerConfig.follow(leftMotor, true);
         rightMotor.configure(followerConfig, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
 
     }
@@ -82,10 +84,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void openElevator() {
-        leftMotor.set(0.5);
+        leftMotor.set(0.2);
     }
 
     public void closeElevator() {
-        leftMotor.set(-0.5);
+        leftMotor.set(-0.2);
+    }
+
+    public double getEncoderPosition() {
+        return leftEncoder.getPosition();
     }
 }

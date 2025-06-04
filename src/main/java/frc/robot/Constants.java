@@ -23,7 +23,7 @@ public final class Constants {
   //swerve modulleri tanımlama matematik:
   public static final class ElevatorConstants {
       public static final int leftMotorID = 31;
-      public static final int rightMotorID = 32;
+      public static final int rightMotorID = 33;
 
       public static final double kS = 0.0;
       public static final double kG = 0.075;
@@ -42,12 +42,12 @@ public final class Constants {
       public static final double specialConstant = 0.04; // Ballpark estimate
   }
   public static final class ShooterConstants {
-      public static final int shooterID = 35;
+      public static final int shooterID = 34;
   }
   public static final class IntakeConstants {
-    public static final int intakeLeftID = 33;
-    public static final int intakeRightID = 34;
-    public static final int intakeAngleID = 36;
+    //public static final int intakeLeftID = 33;
+    //public static final int intakeRightID = 34;
+    //public static final int intakeAngleID = 36;
   }
 
   public static final class ClimberConstants {
