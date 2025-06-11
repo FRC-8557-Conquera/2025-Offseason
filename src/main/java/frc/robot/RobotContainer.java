@@ -37,6 +37,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -53,6 +55,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
@@ -77,8 +80,8 @@ public class RobotContainer {
     private final int translationAxis = 1;
     private final int strafeAxis = 0;
     private final int rotationAxis =  2;
-  
-  
+ 
+
     private final JoystickButton robotCentric =
     new JoystickButton(driver, 1);    
   
@@ -100,10 +103,10 @@ public class RobotContainer {
     private final JoystickButton shooter_IcineAl =
     new JoystickButton(driver2, 2);
   
-    private final JoystickButton shooter_Aci_Yukari = 
+    private final JoystickButton quasiForward = 
     new JoystickButton(driver2, 4);
   
-    private final JoystickButton shooter_Aci_Asagi = 
+    private final JoystickButton dynForward = 
     new JoystickButton(driver2, 3);
   
     private final JoystickButton elevator_l4Button = 
@@ -118,8 +121,11 @@ public class RobotContainer {
     private final JoystickButton elevator_kapat = 
     new JoystickButton(driver2, 8);
   
-    private final JoystickButton shooter_duzelt = 
+    private final JoystickButton quasiReverse = 
     new JoystickButton(driver2 , 10);
+
+    private final JoystickButton dynReverse = 
+    new JoystickButton(driver2 , 6);
 
     private final JoystickButton manualElevator =
     new JoystickButton(driver2, 5);
@@ -201,6 +207,12 @@ public class RobotContainer {
 //      photon.whileTrue(new RunCommand(() -> photonvision(s_Swerve, camera, 21), s_Swerve));
       // aimtarget.whileTrue(s_Swerve.aimAtTarget());
       //driveToPos.whileTrue(new DriveToPosition(s_Swerve, () -> new Pose2d(0, 0, new Rotation2d(0)), new PIDController(0.1, 0, 0), new PIDController(0.1, 0, 0), new ProfiledPIDController(0.1, 0, 0, new TrapezoidProfile.Constraints(0.1, 0.1))));
+
+      quasiForward.whileTrue(elevator.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      quasiReverse.whileTrue(elevator.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+
+      dynForward.whileTrue(elevator.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      dynReverse.whileTrue(elevator.sysIdDynamic(SysIdRoutine.Direction.kReverse));
       
       manualElevator.whileTrue(new RunCommand(elevator::openElevator, elevator).repeatedly());
       manualElevator.whileFalse(new RunCommand(elevator::stop, elevator));
@@ -235,7 +247,7 @@ public class RobotContainer {
   
       Thread.sleep(10);
 
-      SmartDashboard.putNumber("Elevator Encoder", elevator.getEncoderPosition());
+      
        
        
     } catch (InterruptedException ex) {

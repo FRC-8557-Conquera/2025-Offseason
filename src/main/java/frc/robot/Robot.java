@@ -6,8 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -23,8 +26,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.Swerve;
 import swervelib.SwerveDrive;
+
+import java.util.Date;
+
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.revrobotics.spark.SparkMax;
@@ -49,13 +56,20 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     
   }
+  StructArrayPublisher<Translation2d> publisher = NetworkTableInstance.getDefault()
+  .getStructArrayTopic("MyTranslations", Translation2d.struct).publish();
+  
   @Override
   public void robotPeriodic() {
     // Update the buffer with the rainbow animation
 
     CommandScheduler.getInstance().run();
-
-  }
+    Date now = new Date();
+    Long longTime = now.getTime()/1000;
+    if(longTime % 10 == 0){
+      System.out.println(m_robotContainer.elevator.getEncoderPosition());
+    }
+}
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override

@@ -39,7 +39,8 @@ public final class Constants {
 
       public static final double rampRate = 0.25;
 
-      public static final double specialConstant = 0.04; // Ballpark estimate
+      public static final double slope = 0.0437521;
+      public static final double intercept = 0.0183401;
   }
   public static final class ShooterConstants {
       public static final int shooterID = 34;
