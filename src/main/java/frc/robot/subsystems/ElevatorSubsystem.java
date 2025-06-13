@@ -12,10 +12,21 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.units.measure.MutDistance;
+import edu.wpi.first.units.measure.MutLinearVelocity;
+import edu.wpi.first.units.measure.MutVoltage;
+
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Volts;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -32,6 +43,36 @@ public class ElevatorSubsystem extends SubsystemBase {
             Constants.ElevatorConstants.kD,
             new TrapezoidProfile.Constraints(Constants.ElevatorConstants.maxSpeed, Constants.ElevatorConstants.maxAccel)
     );
+    // SysId Routine and seutp
+  // Mutable holder for unit-safe voltage values, persisted to avoid reallocation.
+  private final MutVoltage        appliedVoltage = Volts.mutable(0);
+  // Mutable holder for unit-safe linear distance values, persisted to avoid reallocation.
+  private final MutDistance       distance       = Meters.mutable(0);
+  // Mutable holder for unit-safe linear velocity values, persisted to avoid reallocation.
+  private final MutLinearVelocity velocity       = MetersPerSecond.mutable(0);
+    private final SysIdRoutine     routine   =
+      new SysIdRoutine(
+          // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
+          new SysIdRoutine.Config(Volts.per(Second).of(2),
+                                  Volts.of(2),
+                                  Seconds.of(30)),
+          new SysIdRoutine.Mechanism(
+              // Tell SysId how to plumb the driving voltage to the motor(s).
+              leftMotor::setVoltage,
+              // Tell SysId how to record a frame of data for each motor on the mechanism being
+              // characterized.
+              log -> {
+                // Record a frame for the shooter motor.
+                log.motor("elevator")
+                   .voltage(
+                       appliedVoltage.mut_replace(
+                           leftMotor.getAppliedOutput() * RobotController.getBatteryVoltage(), Volts))
+                   .linearPosition(distance.mut_replace(getPositionMeters(),
+                                                          Meters)) // Records Height in Meters via SysIdRoutineLog.linearPosition
+                   .linearVelocity(velocity.mut_replace(getVelocityMetersPerSecond(),
+                                                          MetersPerSecond)); // Records velocity in MetersPerSecond via SysIdRoutineLog.linearVelocity
+              },
+              this));
     private final ElevatorFeedforward elevatorFeedforward = new ElevatorFeedforward(
             Constants.ElevatorConstants.kS,
             Constants.ElevatorConstants.kG, 
@@ -104,5 +145,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public double getEncoderPosition() {
         return leftEncoder.getPosition();
+        
     }
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+  return routine.quasistatic(direction);
+}
+
+public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+  return routine.dynamic(direction);
+
+}
 }
